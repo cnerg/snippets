@@ -213,9 +213,11 @@ def t_test(filenames, alpha, d):
 
     # Count rejections of null hypothesis.
     rejected = [key for key, val in stat.items() if val[4]]
-    r_str = "t-test: {0} out of {1} tests reject null hypothesis that states \
-(mean_1 - mean_2) = {2}\n".format(len(rejected), len(stat), d)
-    r_str += "Rejected cases: {0}".format(rejected)
+    r_str = "t-test: {0} out of {1} cases reject null hypothesis (mean_1 - \
+mean_2) = {2} with alpha = {3}\n".format(len(rejected), len(stat), d, alpha)
+    r_str += "Rejected cases:"
+    for key in rejected:
+        r_str += "\n- '{0}' with p-value {1:.5e}".format(key, stat[key][2])
     print(r_str)
 
     # Plot histogram of p-values.
