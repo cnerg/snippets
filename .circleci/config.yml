@@ -29,4 +29,6 @@ workflows:
     build_and_test:
         jobs:
             - python2_inputs
-            - piper_job
+            - piper_job:
+                requires:
+                    - python2_inputs
