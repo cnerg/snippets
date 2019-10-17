@@ -20,7 +20,7 @@ jobs:
                 name: List Files
                 command: ls
                 
-workflow:
+workflows:
     build_and_test:
         jobs:
             - python2_inputs
