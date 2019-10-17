@@ -1,5 +1,6 @@
 version: 2.1
 
+
 # Executors define environment where jobs will be run.
 executors:
     snippets:
