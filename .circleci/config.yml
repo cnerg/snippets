@@ -19,8 +19,14 @@ jobs:
             - run: 
                 name: List Files
                 command: ls
+    piper_job:
+        executor:
+            name: snippets
+        steps:
+            - run: ls -a
                 
 workflows:
     build_and_test:
         jobs:
             - python2_inputs
+            - piper_job
