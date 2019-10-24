@@ -8,7 +8,7 @@ executors:
             - image: pyne/pyne_ubuntu_18.04_py2
         environment:
             PYTHONPATH: /root/project/
-    py2:
+    py3:
         docker:
             - image: pyne/pyne_ubuntu_18.04_p3
         environment:
