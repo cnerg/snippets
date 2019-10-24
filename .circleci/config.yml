@@ -15,7 +15,9 @@ jobs:
             name: snippets
         steps:
             - checkout
-            - run: apt update; apt install install -y python-pytest
+            - run: apt update; apt -y install curl python-yaml
+            - run: curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py; python get-pip.py
+            - run: pip install -U pytest
             - run: 
                 name: Run pytest
                 command: pytest tests -vvv 
