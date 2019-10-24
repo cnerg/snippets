@@ -15,6 +15,7 @@ jobs:
             name: snippets
         steps:
             - checkout
+            - run: pip install -y pytest
             - run: 
                 name: Run pytest
                 command: pytest tests -vvv 
