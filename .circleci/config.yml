@@ -15,7 +15,7 @@ jobs:
             name: snippets
         steps:
             - checkout
-            - run: pip install -y pytest
+            - run: apt update; apt install install -y python-pytest
             - run: 
                 name: Run pytest
                 command: pytest tests -vvv 
