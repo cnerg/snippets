@@ -3,7 +3,7 @@ import math
 def arith_op(a, b, op):
     if op == "+":
         c = a+b
-    elif c == '-':
+    elif op == '-':
         c = a-b
     else:
         raise NotImplementedError
