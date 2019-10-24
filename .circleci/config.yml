@@ -17,6 +17,7 @@ jobs:
             - checkout
             - run: apt update; apt -y install curl python-yaml
             - run: curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py; python get-pip.py
+            - run: echo $PYTHONPATH
             - run: pip install -U pytest
             - run: 
                 name: Run pytest
