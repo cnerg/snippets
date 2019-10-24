@@ -1,6 +1,6 @@
 import pytest
 
-import calc as cc
+from source import calc as cc
 
 class TestArithOp(object):
 
