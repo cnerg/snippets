@@ -1,6 +1,6 @@
 import math
 
-def artih_op(a, b, op):
+def arith_op(a, b, op):
     if op == "+":
         c = a+b
     elif c == '-':

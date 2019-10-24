@@ -31,11 +31,11 @@ class TestArithOp(object):
         (19, 2, '/', NotImplementedError),
         ])
     def test_par_error(self, n1, n2, op, exp_error):
-        with pytest.raises(exp_err):
+        with pytest.raises(exp_error):
             cc.arith_op(n1,n2,op)
 
 class TestCircleArea(object):
     
     def test_approx(self):
         obs = cc.circle_area(1)
-        assert obs == pytest.approx(3.1415, rel=1e-6)
+        assert obs == pytest.approx(3.14159, rel=1e-6)
