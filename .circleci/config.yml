@@ -7,7 +7,7 @@ executors:
         docker:
             - image: pyne/pyne_ubuntu_16.04
         environment:
-            PYTHONPATH: ~/project/source/
+            PYTHONPATH: /root/project/source/
             
 jobs:
     pytest:
