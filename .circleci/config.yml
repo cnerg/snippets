@@ -3,19 +3,36 @@ version: 2.1
 
 # Executors define environment where jobs will be run.
 executors:
-    snippets:
+    py2:
         docker:
-            - image: pyne/pyne_ubuntu_16.04
+            - image: pyne/pyne_ubuntu_18.04_py2
+        environment:
+            PYTHONPATH: /root/project/
+    py2:
+        docker:
+            - image: pyne/pyne_ubuntu_18.04_p3
         environment:
             PYTHONPATH: /root/project/
             
 jobs:
-    pytest:
+    pytest_python2:
         executor:
-            name: snippets
+            name: py2
         steps:
             - checkout
             - run: apt update; apt -y install curl python-yaml
+            - run: curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py; python get-pip.py
+            - run: echo $PYTHONPATH
+            - run: pip install -U pytest
+            - run: 
+                name: Run pytest
+                command: pytest tests -vvv 
+    pytest_python3:
+        executor:
+            name: py3
+        steps:
+            - checkout
+            - run: apt update; apt -y install curl python3-yaml
             - run: curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py; python get-pip.py
             - run: echo $PYTHONPATH
             - run: pip install -U pytest
@@ -26,4 +43,5 @@ jobs:
 workflows:
     build_and_test:
         jobs:
-            - pytest
+            - pytest_python2
+            - pytest_python3
