@@ -13,11 +13,33 @@ executors:
             - image: pyne/ubuntu_18.04_py3_pyne-deps
         environment:
             PYTHONPATH: /root/project/
+    py2_s:
+        docker:
+            - image: pyne/ubuntu_18.04_py2_pyne-deps
+        environment:
+            PYTHONPATH: /root/project/source
+    py3_s:
+        docker:
+            - image: pyne/ubuntu_18.04_py3_pyne-deps
+        environment:
+            PYTHONPATH: /root/project/source
             
 jobs:
     pytest_python2:
         executor:
             name: py2
+        steps:
+            - checkout
+            - run: apt update; apt -y install curl python-yaml
+            - run: curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py; python get-pip.py
+            - run: echo $PYTHONPATH
+            - run: pip install -U pytest
+            - run: 
+                name: Run pytest
+                command: pytest tests -vvv 
+    pytest_python2_s:
+        executor:
+            name: py2_s
         steps:
             - checkout
             - run: apt update; apt -y install curl python-yaml
@@ -39,9 +61,23 @@ jobs:
             - run: 
                 name: Run pytest
                 command: pytest tests -vvv 
+    pytest_python3_s:
+        executor:
+            name: py3_s
+        steps:
+            - checkout
+            - run: apt update; apt -y install curl python3-yaml
+            - run: curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py; python get-pip.py
+            - run: echo $PYTHONPATH
+            - run: pip install -U pytest
+            - run: 
+                name: Run pytest
+                command: pytest tests -vvv 
                 
 workflows:
     build_and_test:
         jobs:
             - pytest_python2
             - pytest_python3
+            - pytest_python2_s
+            - pytest_python3_s
