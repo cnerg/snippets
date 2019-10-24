@@ -25,7 +25,7 @@ executors:
             PYTHONPATH: /root/project/source
             
 jobs:
-    pytest_python2:
+    pytest_noinit_python2_direct:
         executor:
             name: py2
         steps:
@@ -34,10 +34,9 @@ jobs:
             - run: curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py; python get-pip.py
             - run: echo $PYTHONPATH
             - run: pip install -U pytest
-            - run: 
-                name: Run pytest
-                command: pytest tests -vvv 
-    pytest_python2_s:
+            - run: rm -rf source/__init__.py
+            - run: pytest tests/test_direct_import.py -vvv 
+    pytest_noinit_python2_s_direct:
         executor:
             name: py2_s
         steps:
@@ -46,10 +45,9 @@ jobs:
             - run: curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py; python get-pip.py
             - run: echo $PYTHONPATH
             - run: pip install -U pytest
-            - run: 
-                name: Run pytest
-                command: pytest tests -vvv 
-    pytest_python3:
+            - run: rm -rf source/__init__.py
+            - run: pytest tests/test_direct_import.py -vvv 
+    pytest_noinit_python3_direct:
         executor:
             name: py3
         steps:
@@ -58,10 +56,9 @@ jobs:
             - run: curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py; python get-pip.py
             - run: echo $PYTHONPATH
             - run: pip install -U pytest
-            - run: 
-                name: Run pytest
-                command: pytest tests -vvv 
-    pytest_python3_s:
+            - run: rm -rf source/__init__.py
+            - run: pytest tests/test_direct_import.py -vvv 
+    pytest_noinit_python3_s_direct:
         executor:
             name: py3_s
         steps:
@@ -70,14 +67,153 @@ jobs:
             - run: curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py; python get-pip.py
             - run: echo $PYTHONPATH
             - run: pip install -U pytest
-            - run: 
-                name: Run pytest
-                command: pytest tests -vvv 
+            - run: rm -rf source/__init__.py
+            - run: pytest tests/test_direct_import.py -vvv 
+    
+    pytest_noinit_python2_from:
+        executor:
+            name: py2
+        steps:
+            - checkout
+            - run: apt update; apt -y install curl python-yaml
+            - run: curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py; python get-pip.py
+            - run: echo $PYTHONPATH
+            - run: pip install -U pytest
+            - run: rm -rf source/__init__.py
+            - run: pytest tests/test_from_source.py -vvv 
+    pytest_noinit_python2_s_from:
+        executor:
+            name: py2_s
+        steps:
+            - checkout
+            - run: apt update; apt -y install curl python-yaml
+            - run: curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py; python get-pip.py
+            - run: echo $PYTHONPATH
+            - run: pip install -U pytest
+            - run: rm -rf source/__init__.py
+            - run: pytest tests/test_from_source.py -vvv 
+    pytest_noinit_python3_from:
+        executor:
+            name: py3
+        steps:
+            - checkout
+            - run: apt update; apt -y install curl python3-yaml
+            - run: curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py; python get-pip.py
+            - run: echo $PYTHONPATH
+            - run: pip install -U pytest
+            - run: rm -rf source/__init__.py
+            - run: pytest tests/test_from_source.py -vvv 
+    pytest_noinit_python3_s_from:
+        executor:
+            name: py3_s
+        steps:
+            - checkout
+            - run: apt update; apt -y install curl python3-yaml
+            - run: curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py; python get-pip.py
+            - run: echo $PYTHONPATH
+            - run: pip install -U pytest
+            - run: rm -rf source/__init__.py
+            - run: pytest tests/test_from_source.py -vvv 
+   
+              
+    pytest_python2_direct:
+        executor:
+            name: py2
+        steps:
+            - checkout
+            - run: apt update; apt -y install curl python-yaml
+            - run: curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py; python get-pip.py
+            - run: echo $PYTHONPATH
+            - run: pip install -U pytest
+            - run: pytest tests/test_direct_import.py -vvv 
+    pytest_python2_s_direct:
+        executor:
+            name: py2_s
+        steps:
+            - checkout
+            - run: apt update; apt -y install curl python-yaml
+            - run: curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py; python get-pip.py
+            - run: echo $PYTHONPATH
+            - run: pip install -U pytest
+            - run: pytest tests/test_direct_import.py -vvv 
+    pytest_python3_direct:
+        executor:
+            name: py3
+        steps:
+            - checkout
+            - run: apt update; apt -y install curl python3-yaml
+            - run: curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py; python get-pip.py
+            - run: echo $PYTHONPATH
+            - run: pip install -U pytest
+            - run: pytest tests/test_direct_import.py -vvv 
+    pytest_python3_s_direct:
+        executor:
+            name: py3_s
+        steps:
+            - checkout
+            - run: apt update; apt -y install curl python3-yaml
+            - run: curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py; python get-pip.py
+            - run: echo $PYTHONPATH
+            - run: pip install -U pytest
+            - run: pytest tests/test_direct_import.py -vvv 
+    
+    pytest_python2_from:
+        executor:
+            name: py2
+        steps:
+            - checkout
+            - run: apt update; apt -y install curl python-yaml
+            - run: curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py; python get-pip.py
+            - run: echo $PYTHONPATH
+            - run: pip install -U pytest
+            - run: pytest tests/test_from_source.py -vvv 
+    pytest_python2_s_from:
+        executor:
+            name: py2_s
+        steps:
+            - checkout
+            - run: apt update; apt -y install curl python-yaml
+            - run: curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py; python get-pip.py
+            - run: echo $PYTHONPATH
+            - run: pip install -U pytest
+            - run: pytest tests/test_from_source.py -vvv 
+    pytest_python3_from:
+        executor:
+            name: py3
+        steps:
+            - checkout
+            - run: apt update; apt -y install curl python3-yaml
+            - run: curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py; python get-pip.py
+            - run: echo $PYTHONPATH
+            - run: pip install -U pytest
+            - run: pytest tests/test_from_source.py -vvv 
+    pytest_python3_s_from:
+        executor:
+            name: py3_s
+        steps:
+            - checkout
+            - run: apt update; apt -y install curl python3-yaml
+            - run: curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py; python get-pip.py
+            - run: echo $PYTHONPATH
+            - run: pip install -U pytest
+            - run: pytest tests/test_from_source.py -vvv 
                 
 workflows:
     build_and_test:
         jobs:
-            - pytest_python2
-            - pytest_python3
-            - pytest_python2_s
-            - pytest_python3_s
+            - pytest_python2_direct
+            - pytest_python3_direct
+            - pytest_python2_s_direct
+            - pytest_python3_s_direct
+            - pytest_python2_from
+            - pytest_python3_from
+            - pytest_python2_s_from
+            - pytest_python3_s_from
+            - pytest_noinit_python2_direct
+            - pytest_noinit_python3_direct
+            - pytest_noinit_python2_s_direct
+            - pytest_noinit_python3_s_direct
+            - pytest_noinit_python2_from
+            - pytest_noinit_python3_from
+            - pytest_noinit_python2_s_from
+            - pytest_noinit_python3_s_from
