@@ -5,12 +5,12 @@ version: 2.1
 executors:
     py2:
         docker:
-            - image: pyne/pyne_ubuntu_18.04_py2_pyne-deps
+            - image: pyne/ubuntu_18.04_py2_pyne-deps
         environment:
             PYTHONPATH: /root/project/
     py3:
         docker:
-            - image: pyne/pyne_ubuntu_18.04_py3_pyne-deps
+            - image: pyne/ubuntu_18.04_py3_pyne-deps
         environment:
             PYTHONPATH: /root/project/
             
