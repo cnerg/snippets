@@ -17,7 +17,7 @@ jobs:
             - checkout
             - run: 
                 name: Run pytest
-                command: 
+                command: pytest tests -vvv 
                 
 workflows:
     build_and_test:
