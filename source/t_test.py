@@ -140,7 +140,7 @@ def two_sample_t(m1, se1, m2, se2, d):
     return t_stat
 
 
-def print_rej_summary(stat):
+def print_rej_summary(stat, alpha, d):
     """Print summary of null hypothesis rejection results.
 
     This function counts rejections of null hypothesis and prints the summary.
@@ -148,6 +148,8 @@ def print_rej_summary(stat):
     Arguments:
         stat (dict): Dictionary of {key, [t-vaue, degree of freedom, p-value,
             critical t-value, rejection boolean]} pair.
+        alpha (float): Significance level.
+        d (float): Set discrepancy between two input data, if any.
 
     Returns:
         None.
@@ -260,6 +262,6 @@ if __name__ == """__main__""":
     sample_2 = process_data(data_2)
 
     stat = t_test(sample_1, sample_2, args.alpha, args.discrepancy)
-    print_rej_summary(stat)
+    print_rej_summary(stat, args.alpha, args.discrepancy)
 
     plot_p_hist(stat, args.alpha)
