@@ -97,16 +97,14 @@ def process_data(rdata, default_n=1000):
     return pdata
 
 
-def check_data_matching(file_1, set_1, file_2, set_2):
+def check_data_matching(set_1, set_2):
     """Check if two sets of data match each other.
 
     This function checks if the keyword sets of two input data match each other.
     This is required for two-sample t-test.
 
     Arguments:
-        file_1 (str): Filename of first input.
         set_1 (set): Set of keywords from first input data.
-        file_2 (str): Filename of second input.
         set_2 (set): Set of keywords from second input data.
 
     Returns:
@@ -114,11 +112,11 @@ def check_data_matching(file_1, set_1, file_2, set_2):
 
     """
     if set_1 != set_2:
-        err_str = "Data set mismatching.\n"
+        err_str = "Data set mismatching."
         if set_1 - set_2:
-            err_str += "File {0}: missing {1}.".format(file_1, set_1 - set_2)
-        elif set_2 - set_1:
-            err_str += "File {0}: missing {1}.".format(file_2, set_2 - set_1)
+            err_str += " sample_1 missing {0}.".format(set_1 - set_2)
+        if set_2 - set_1:
+            err_str += " sample_2 missing {0}.".format(set_2 - set_1)
         raise KeyError(err_str)
 
 
@@ -184,7 +182,7 @@ def t_test(sample_1, sample_2, alpha, d):
 
     """
 
-    check_data_matching(sample_1, set(data_1), sample_2, set(data_2))
+    check_data_matching(set(sample_1), set(sample_2))
 
     stat = {}
     for key in data_1:
