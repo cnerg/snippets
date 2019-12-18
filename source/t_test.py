@@ -162,13 +162,14 @@ mean_2) = {2} with alpha = {3}\n".format(len(rejected), len(stat), d, alpha)
     print(r_str)
 
 
-def plot_p_hist(p_vals, alpha):
+def plot_p_hist(stat, alpha):
     """Plot histogram of calculated p-values.
 
     This function generates a historgam of p-values for further analysis.
 
     Arguments:
-        p_vals (list): List of p-values.
+        stat (dict): Dictionary of {key, [t-vaue, degree of freedom, p-value,
+            critical t-value, rejection boolean]} pair.
         alpha (float): Significance level.
 
     Returns:
@@ -177,6 +178,7 @@ def plot_p_hist(p_vals, alpha):
     """
     fig, ax = plt.subplots()
 
+    p_vals = [val[2] for key, val in stat.items()]
     nb = int(1.0/alpha)
     plt.hist(p_vals, bins=nb, range=[0.0, 1.0], ec='black')
     ax.axvline(x=alpha, color='red', linestyle="--")
@@ -231,11 +233,6 @@ def t_test(sample_1, sample_2, alpha, d):
     return stat
 
 
-    # Plot histogram of p-values.
-    p_vals = [val[2] for key, val in stat.items()]
-    plot_p_hist(p_vals, alpha)
-
-
 # Main.
 if __name__ == """__main__""":
     parser = argparse.ArgumentParser(description="Run student's t-test.")
@@ -264,3 +261,5 @@ if __name__ == """__main__""":
 
     stat = t_test(sample_1, sample_2, args.alpha, args.discrepancy)
     print_rej_summary(stat)
+
+    plot_p_hist(stat, args.alpha)
