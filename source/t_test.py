@@ -181,7 +181,8 @@ def t_test(sample_1, sample_2, alpha, d):
         d (float): Set discrepancy between two input data, if any.
 
     Returns:
-        None.
+        stat (dict): Dictionary of {key, [t-vaue, degree of freedom, p-value,
+            critical t-value, rejection boolean]} pair.
 
     """
 
@@ -204,6 +205,8 @@ def t_test(sample_1, sample_2, alpha, d):
             reject = True
 
         stat[key] = (t_val, df, p_val, t_crit, reject)
+
+    return stat
 
     # Count rejections of null hypothesis.
     rejected = [key for key, val in stat.items() if val[4]]
@@ -245,5 +248,4 @@ if __name__ == """__main__""":
     data_2 = load_data(file_2)
     sample_2 = process_data(data_2)
 
-
-    t_test(sample_1, sample_2, args.alpha, args.discrepancy)
+    stat = t_test(sample_1, sample_2, args.alpha, args.discrepancy)
