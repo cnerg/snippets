@@ -173,7 +173,10 @@ def t_test(sample_1, sample_2, alpha, d):
     This is the main function to call sub-functions for performing t-test.
 
     Arguments:
-        filenames (list): List of two filenames for comparison.
+        sample_1 (dict): Dictionary of {key: [Sample mean, Estimated standard
+            error of the mean, sample size]} pair.
+        sample_2 (dict): Dictionary of {key: [Sample mean, Estimated standard
+            error of the mean, sample size]} pair.
         alpha (float): Significance level.
         d (float): Set discrepancy between two input data, if any.
 
@@ -186,8 +189,8 @@ def t_test(sample_1, sample_2, alpha, d):
 
     stat = {}
     for key in data_1:
-        [m1, se1, n1] = data_1[key]
-        [m2, se2, n2] = data_2[key]
+        [m1, se1, n1] = sample_1[key]
+        [m2, se2, n2] = sample_2[key]
 
         t_val = two_sample_t(m1, se1, m2, se2, d)
         df = n1 + n2 - 2  # Degree of freedom.
