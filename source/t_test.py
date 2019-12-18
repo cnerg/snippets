@@ -140,6 +140,28 @@ def two_sample_t(m1, se1, m2, se2, d):
     return t_stat
 
 
+def print_rej_summary(stat):
+    """Print summary of null hypothesis rejection results.
+
+    This function counts rejections of null hypothesis and prints the summary.
+
+    Arguments:
+        stat (dict): Dictionary of {key, [t-vaue, degree of freedom, p-value,
+            critical t-value, rejection boolean]} pair.
+
+    Returns:
+        None.
+
+    """
+    rejected = [key for key, val in stat.items() if val[4]]
+    r_str = "t-test: {0} out of {1} cases reject null hypothesis (mean_1 - \
+mean_2) = {2} with alpha = {3}\n".format(len(rejected), len(stat), d, alpha)
+    r_str += "Rejected cases:"
+    for key in rejected:
+        r_str += "\n- '{0}' with p-value {1:.5e}".format(key, stat[key][2])
+    print(r_str)
+
+
 def plot_p_hist(p_vals, alpha):
     """Plot histogram of calculated p-values.
 
@@ -208,14 +230,6 @@ def t_test(sample_1, sample_2, alpha, d):
 
     return stat
 
-    # Count rejections of null hypothesis.
-    rejected = [key for key, val in stat.items() if val[4]]
-    r_str = "t-test: {0} out of {1} cases reject null hypothesis (mean_1 - \
-mean_2) = {2} with alpha = {3}\n".format(len(rejected), len(stat), d, alpha)
-    r_str += "Rejected cases:"
-    for key in rejected:
-        r_str += "\n- '{0}' with p-value {1:.5e}".format(key, stat[key][2])
-    print(r_str)
 
     # Plot histogram of p-values.
     p_vals = [val[2] for key, val in stat.items()]
@@ -249,3 +263,4 @@ if __name__ == """__main__""":
     sample_2 = process_data(data_2)
 
     stat = t_test(sample_1, sample_2, args.alpha, args.discrepancy)
+    print_rej_summary(stat)
