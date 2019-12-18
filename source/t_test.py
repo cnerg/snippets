@@ -169,7 +169,7 @@ def plot_p_hist(p_vals, alpha):
     plt.show()
 
 
-def t_test(filenames, alpha, d):
+def t_test(sample_1, sample_2, alpha, d):
     """Perform t-test.
 
     This is the main function to call sub-functions for performing t-test.
@@ -183,13 +183,6 @@ def t_test(filenames, alpha, d):
         None.
 
     """
-    [sample_1, sample_2] = filenames
-
-    rd_1 = load_data(sample_1)
-    data_1 = process_data(rd_1)
-
-    rd_2 = load_data(sample_2)
-    data_2 = process_data(rd_2)
 
     check_data_matching(sample_1, set(data_1), sample_2, set(data_2))
 
@@ -242,4 +235,14 @@ if __name__ == """__main__""":
 
     args = parser.parse_args()
 
-    t_test(args.filenames, args.alpha, args.discrepancy)
+
+    [file_1, file_2] = args.filenames
+
+    data_1 = load_data(file_1)
+    sample_1 = process_data(data_1)
+
+    data_2 = load_data(file_2)
+    sample_2 = process_data(data_2)
+
+
+    t_test(sample_1, sample_2, args.alpha, args.discrepancy)
