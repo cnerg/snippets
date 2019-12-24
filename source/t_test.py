@@ -213,6 +213,7 @@ def t_test(sample_1, sample_2, alpha, d):
     """
 
     check_data_matching(set(sample_1), set(sample_2))
+    # IDEA: Implement 'ignore'(bool) where mismatching points are just skipped.
 
     stat = {}
     for key in data_1:
