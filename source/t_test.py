@@ -208,7 +208,7 @@ def plot_p_hist(stat, alpha):
     plt.show()
 
 
-def t_test(sample_1, sample_2, alpha, d):
+def t_test(sample_1, sample_2, alpha, d, skip):
     """Perform t-test.
 
     This is the main function to call sub-functions for performing t-test.
@@ -220,18 +220,17 @@ def t_test(sample_1, sample_2, alpha, d):
             error of the mean, sample size]} pair.
         alpha (float): Significance level.
         d (float): Set discrepancy between two input data, if any.
+        skip (bool): Boolean to skip mismatching keywords.
 
     Returns:
         stat (dict): Dictionary of {key, [t-vaue, degree of freedom, p-value,
             critical t-value, rejection boolean]} pair.
 
     """
-
-    check_data_matching(set(sample_1), set(sample_2))
-    # IDEA: Implement 'ignore'(bool) where mismatching points are just skipped.
+    key_set = check_data_matching(set(sample_1), set(sample_2), skip)
 
     stat = {}
-    for key in data_1:
+    for key in key_set:
         [m1, se1, n1] = sample_1[key]
         [m2, se2, n2] = sample_2[key]
 
@@ -266,6 +265,10 @@ if __name__ == """__main__""":
                         help="Set discrepancy between two data set. "\
                         + "Default: {0}".format(DEFAULT_d))
 
+    parser.add_argument("--skip", "-s", action='store_true',
+                        help="Skip mismatching data points instead of raising" \
+                        + " errors.")
+
     args = parser.parse_args()
 
 
@@ -277,7 +280,7 @@ if __name__ == """__main__""":
     data_2 = load_data(file_2)
     sample_2 = process_data(data_2)
 
-    stat = t_test(sample_1, sample_2, args.alpha, args.discrepancy)
+    stat = t_test(sample_1, sample_2, args.alpha, args.discrepancy, args.skip)
     print_rej_summary(stat, args.alpha, args.discrepancy)
 
     plot_p_hist(stat, args.alpha)
