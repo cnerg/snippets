@@ -97,27 +97,42 @@ def process_data(rdata, default_n=1000):
     return pdata
 
 
-def check_data_matching(set_1, set_2):
+def check_data_matching(set_1, set_2, skip):
     """Check if two sets of data match each other.
 
-    This function checks if the keyword sets of two input data match each other.
-    This is required for two-sample t-test.
+    This function checks if the keywords set of two input data match each other.
+    If 'skip' is True, a set of keywords common to both input data are returned,
+    meaning that mismatching keywords will be skipped without raising errors.
+    If 'skip' is False, any mismatching keyword on either of two input data will
+    raise KeyError with information on which keywords are missing on the data.
 
     Arguments:
         set_1 (set): Set of keywords from first input data.
         set_2 (set): Set of keywords from second input data.
+        skip (bool): Boolean to skip mismatching keywords.
 
     Returns:
-        None.
+        common_set (set): Set of keywords common to set_1 and set_2.
 
     """
+    common_set = set_1
+
     if set_1 != set_2:
         err_str = "Data set mismatching."
         if set_1 - set_2:
             err_str += " sample_1 missing {0}.".format(set_1 - set_2)
         if set_2 - set_1:
             err_str += " sample_2 missing {0}.".format(set_2 - set_1)
-        raise KeyError(err_str)
+
+        common_set = set_1 & set_2
+
+        if skip:
+            err_str += "\nMismatching keys will be skipped."
+            print(err_str)
+        else:
+            raise KeyError(err_str)
+
+    return common_set
 
 
 def two_sample_t(m1, se1, m2, se2, d):
