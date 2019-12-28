@@ -208,7 +208,7 @@ def plot_p_hist(stat, alpha):
     plt.show()
 
 
-def t_test(sample_1, sample_2, alpha, d, skip):
+def t_test(sample_1, sample_2, alpha, d, skip, summary=True):
     """Perform t-test.
 
     This is the main function to call sub-functions for performing t-test.
@@ -221,6 +221,8 @@ def t_test(sample_1, sample_2, alpha, d, skip):
         alpha (float): Significance level.
         d (float): Set discrepancy between two input data, if any.
         skip (bool): Boolean to skip mismatching keywords.
+        summary (bool): Boolean to print summary of null hypothesis rejections.
+            Default = True
 
     Returns:
         stat (dict): Dictionary of {key, [t-vaue, degree of freedom, p-value,
@@ -246,6 +248,9 @@ def t_test(sample_1, sample_2, alpha, d, skip):
             reject = True
 
         stat[key] = (t_val, df, p_val, t_crit, reject)
+
+    if summary:
+        print_rej_summary(stat, alpha, d)
 
     return stat
 
@@ -281,6 +286,5 @@ if __name__ == """__main__""":
     sample_2 = process_data(data_2)
 
     stat = t_test(sample_1, sample_2, args.alpha, args.discrepancy, args.skip)
-    print_rej_summary(stat, args.alpha, args.discrepancy)
 
     plot_p_hist(stat, args.alpha)
