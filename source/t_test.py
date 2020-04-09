@@ -43,7 +43,8 @@ from scipy import stats
 
 DEFAULT_a = 0.05  # Default significance level.
 DEFAULT_d = 0  # Default discrepancy between two means.
-
+DEFAULT_plot = 'histogram'  # Default plot style for t-test results.
+CHOICES_plot = ('histogram', 'heatmap')  # Plot style choices.
 
 def load_data(filename):
     """Load data from a file.
@@ -358,6 +359,11 @@ if __name__ == """__main__""":
                         help="Skip mismatching data points instead of raising" \
                         + " errors.")
 
+    parser.add_argument("--plot", "-p", type=str, choices=CHOICES_plot,
+                        default=DEFAULT_plot,
+                        help="Plot style. Choices: {0} ".format(CHOICES_plot) \
+                        + "Default: {0}".format(DEFAULT_plot))
+
     args = parser.parse_args()
 
 
@@ -371,4 +377,8 @@ if __name__ == """__main__""":
 
     stat = t_test(sample_1, sample_2, args.alpha, args.discrepancy, args.skip)
 
-    plot_p_hist(stat, args.alpha)
+    if args.plot == 'histogram':
+        plot_p_hist(stat, args.alpha)
+    elif args.plot == 'heatmap':
+        (x, y, v, tt, xl, yl) = process_2dplot_input(stat)
+        plot_p_2d(x, y, v, tt, xl, yl, args.alpha)
