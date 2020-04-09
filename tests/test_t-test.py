@@ -14,7 +14,7 @@ The following classes/methods are included in this module:
 
 import pytest
 
-import t_test as tt
+from source import t_test as tt
 
 TOL=1e-5  # Tolerance for approximate assertion.
 
