@@ -47,6 +47,7 @@ from scipy import stats
 
 DEFAULT_a = 0.05  # Default significance level.
 DEFAULT_d = 0  # Default discrepancy between two means.
+DEFAULT_v = 1  # Default verbosity level.
 DEFAULT_plot = 'histogram'  # Default plot style for t-test results.
 CHOICES_plot = ('histogram', 'heatmap')  # Plot style choices.
 
@@ -200,6 +201,9 @@ def print_rej_summary(stat, alpha, d, verbose):
         alpha (float): Significance level.
         d (float): Set discrepancy between two input data, if any.
         verbose (int): Integer indicating verbosity level of t-test result.
+            0: No summary displayed.
+            1: Display simple summary with rejection counts.
+            2: Display all rejected cases.
 
     Returns:
         None.
@@ -299,7 +303,7 @@ def plot_p_2d(x, y, v, tt, xl, yl, alpha, reject_only=True):
     plt.show()
 
 
-def t_test(sample_1, sample_2, alpha, d, skip, verbose=1):
+def t_test(sample_1, sample_2, alpha, d, skip):
     """Perform t-test.
 
     This is the main function to call sub-functions for performing t-test.
@@ -312,11 +316,6 @@ def t_test(sample_1, sample_2, alpha, d, skip, verbose=1):
         alpha (float): Significance level.
         d (float): Set discrepancy between two input data, if any.
         skip (bool): Boolean to skip mismatching keywords.
-        verbose (int): Integer indicating verbosity level of t-test result.
-            0: No summary displayed.
-            1: Display simple summary with rejection counts.
-            2: Display all rejected cases.
-            Default = 1
 
     Returns:
         stat (dict): Dictionary of {key, [t-vaue, degree of freedom, p-value,
@@ -342,9 +341,6 @@ def t_test(sample_1, sample_2, alpha, d, skip, verbose=1):
             reject = True
 
         stat[key] = (t_val, df, p_val, t_crit, reject)
-
-    if verbose:
-        print_rej_summary(stat, alpha, d, verbose)
 
     return stat
 
@@ -372,7 +368,8 @@ if __name__ == """__main__""":
                         help="Verbosity level of t-test result. " \
                         + "0: No summary displayed. " \
                         + "1: Display simple summary with rejection counts. " \
-                        + "2: Display all rejected cases.")
+                        + "2: Display all rejected cases. " \
+                        + "Default: {0}".format(DEFAULT_v))
 
     parser.add_argument("--plot", "-p", type=str, choices=CHOICES_plot,
                         default=DEFAULT_plot,
@@ -390,8 +387,10 @@ if __name__ == """__main__""":
     data_2 = load_data(file_2)
     sample_2 = process_data(data_2)
 
-    stat = t_test(sample_1, sample_2, args.alpha, args.discrepancy, args.skip,
-                  args.verbose)
+    stat = t_test(sample_1, sample_2, args.alpha, args.discrepancy, args.skip)
+
+    if args.verbose:
+        print_rej_summary(stat, args.alpha, args.discrepancy, args.verbose)
 
     if args.plot == 'histogram':
         plot_p_hist(stat, args.alpha)
