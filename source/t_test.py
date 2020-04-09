@@ -98,6 +98,34 @@ def process_data(rdata, default_n=1000):
     return pdata
 
 
+def process_2dplot_input(stat):
+    """Process data for 2D heatmap plot.
+
+    This function processes t-test result data into proper input for
+    `plot_p_2d` function that plots p-values in 2D heatmap.
+
+    Arguments:
+        stat (dict): Dictionary of {key, [t-vaue, degree of freedom, p-value,
+            critical t-value, rejection boolean]} pair.
+
+    Returns:
+        x (list): List of x-coordinates for scatter plot.
+        y (list): List of y-coordinates for scatter plot.
+        v (list): List of p-values to be displayed in color.
+        tt (str): Figure title.
+        xl (str): x-axis label.
+        yl (str): y-axis label.
+
+    """
+    x = [key[0] for key in stat]
+    y = [key[1] for key in stat]
+    v = [val[2] for val in stat.values()]
+    tt = 'F'
+    xl = "X"
+    yl = "Y"
+    return (x, y, v, tt, xl, yl)
+
+
 def check_data_matching(set_1, set_2, skip):
     """Check if two sets of data match each other.
 
