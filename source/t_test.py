@@ -124,12 +124,16 @@ def process_2dplot_input(stat):
         yl (str): y-axis label.
 
     """
-    x = [key[0] for key in stat]
-    y = [key[1] for key in stat]
-    v = [val[2] for val in stat.values()]
-    tt = 'F'
-    xl = "X"
-    yl = "Y"
+    [x, y, v, tt, xl, yl] = [[], [], [], '', '', '']
+    # Note that x, y, and v are 1D lists as inputs for scatter plots.
+    # Size of x, y, and z must be the same.
+    # Example:
+    # x = [key[0] for key in stat]
+    # y = [key[1] for key in stat]
+    # v = [val[2] for val in stat.values()]
+    # tt = "p-value Heatmap"
+    # xl = "X [cm]"
+    # yl = "Y [cm]"
     return (x, y, v, tt, xl, yl)
 
 
