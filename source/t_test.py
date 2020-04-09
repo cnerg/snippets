@@ -185,7 +185,7 @@ def two_sample_t(m1, se1, m2, se2, d):
     return t_stat
 
 
-def print_rej_summary(stat, alpha, d):
+def print_rej_summary(stat, alpha, d, verbose):
     """Print summary of null hypothesis rejection results.
 
     This function counts rejections of null hypothesis and prints the summary.
@@ -195,6 +195,7 @@ def print_rej_summary(stat, alpha, d):
             critical t-value, rejection boolean]} pair.
         alpha (float): Significance level.
         d (float): Set discrepancy between two input data, if any.
+        verbose (int): Integer indicating verbosity level of t-test result.
 
     Returns:
         None.
@@ -203,9 +204,10 @@ def print_rej_summary(stat, alpha, d):
     rejected = [key for key, val in stat.items() if val[4]]
     r_str = "t-test: {0} out of {1} cases reject null hypothesis (mean_1 - \
 mean_2) = {2} with alpha = {3}\n".format(len(rejected), len(stat), d, alpha)
-    r_str += "Rejected cases:"
-    for key in rejected:
-        r_str += "\n- '{0}' with p-value {1:.5e}".format(key, stat[key][2])
+    if verbose > 1:
+        r_str += "Rejected cases:"
+        for key in rejected:
+            r_str += "\n- '{0}' with p-value {1:.5e}".format(key, stat[key][2])
     print(r_str)
 
 
@@ -293,7 +295,7 @@ def plot_p_2d(x, y, v, tt, xl, yl, alpha, reject_only=True):
     plt.show()
 
 
-def t_test(sample_1, sample_2, alpha, d, skip, summary=True):
+def t_test(sample_1, sample_2, alpha, d, skip, verbose=1):
     """Perform t-test.
 
     This is the main function to call sub-functions for performing t-test.
@@ -306,8 +308,11 @@ def t_test(sample_1, sample_2, alpha, d, skip, summary=True):
         alpha (float): Significance level.
         d (float): Set discrepancy between two input data, if any.
         skip (bool): Boolean to skip mismatching keywords.
-        summary (bool): Boolean to print summary of null hypothesis rejections.
-            Default = True
+        verbose (int): Integer indicating verbosity level of t-test result.
+            0: No summary displayed.
+            1: Display simple summary with rejection counts.
+            2: Display all rejected cases.
+            Default = 1
 
     Returns:
         stat (dict): Dictionary of {key, [t-vaue, degree of freedom, p-value,
@@ -334,8 +339,8 @@ def t_test(sample_1, sample_2, alpha, d, skip, summary=True):
 
         stat[key] = (t_val, df, p_val, t_crit, reject)
 
-    if summary:
-        print_rej_summary(stat, alpha, d)
+    if verbose:
+        print_rej_summary(stat, alpha, d, verbose)
 
     return stat
 
@@ -359,6 +364,12 @@ if __name__ == """__main__""":
                         help="Skip mismatching data points instead of raising" \
                         + " errors.")
 
+    parser.add_argument("--verbose", "-v", type=int, default=1,
+                        help="Verbosity level of t-test result. " \
+                        + "0: No summary displayed. " \
+                        + "1: Display simple summary with rejection counts. " \
+                        + "2: Display all rejected cases.")
+
     parser.add_argument("--plot", "-p", type=str, choices=CHOICES_plot,
                         default=DEFAULT_plot,
                         help="Plot style. Choices: {0} ".format(CHOICES_plot) \
@@ -375,7 +386,8 @@ if __name__ == """__main__""":
     data_2 = load_data(file_2)
     sample_2 = process_data(data_2)
 
-    stat = t_test(sample_1, sample_2, args.alpha, args.discrepancy, args.skip)
+    stat = t_test(sample_1, sample_2, args.alpha, args.discrepancy, args.skip,
+                  args.verbose)
 
     if args.plot == 'histogram':
         plot_p_hist(stat, args.alpha)
