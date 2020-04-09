@@ -26,10 +26,14 @@ Usage:
 - `filenames`: Input data filenames. Must be two strings.
 - `--alpha`(`-a`): Target significance level.
 - `--discrepancy`(`-d`): Set discrepancy between two data set.
-* $ python3 t_test.py file1 file2 -a 0.001 -d 0.04
+- `--skip`(`-s`): Skip mismatching data points instead of raising errors.
+- `--verbose`(`-v`): Verbosity level of t-test result.
+- `--plot`(`-p`): Plot style.
+* $ python3 t_test.py file1 file2 -a 0.001 -d 0.04 -s -v 2 -p 'histogram'
   -> Calculate t-statistic with significance level of 0.001 (or 0.1 %)
   for each pair of data in `file1` and file2` that are set to have discrepancy
-  of 0.04. Count the number of pairs that reject null hypothesis, and plot a
+  of 0.04. Skip any mismatching data points. Display the number of pairs that
+  reject null hypothesis along with details of all rejected cases, and plot a
   histogram of p-values.
 
 """
