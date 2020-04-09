@@ -38,6 +38,7 @@ import argparse
 import math
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib import colors
 from scipy import stats
 
 DEFAULT_a = 0.05  # Default significance level.
@@ -205,6 +206,61 @@ def plot_p_hist(stat, alpha):
     ax.set_xlabel("p-value [-]")
     ax.set_xticks(np.arange(0.0, 1.0, step=alpha), minor=True)
     ax.set_ylabel("Counts [#]")
+    plt.show()
+
+
+def plot_p_2d(x, y, v, tt, xl, yl, alpha, reject_only=True):
+    """Plot calculated p-values in 2D heatmap.
+
+    This function generates a 2D heatmap of p-values.
+
+    Arguments:
+        x (list): List of x-coordinates for scatter plot.
+        y (list): List of y-coordinates for scatter plot.
+        v (list): List of p-values to be displayed in color.
+        tt (str): Figure title.
+        xl (str): x-axis label.
+        yl (str): y-axis label.
+        alpha (float): Significance level.
+        reject_only (bool): True if sequential heatmap is generated for rejected
+            cases (p <= alpha) and accepted cases (p > alpha) are replaced by
+            'pass' marker (tri_down), False if diverging heatmap is generated
+            over the entire range with center color set to be the alpha value
+            (Note that this can lead to significantly different color scales
+            between rejected cases and accepted cases.).
+
+    Returns:
+        None.
+
+    """
+    fig, ax = plt.subplots()
+    x = np.array(x)
+    y = np.array(y)
+    v = np.array(v)
+
+    if reject_only:
+        xp = x[v>alpha]
+        yp = y[v>alpha]
+        vp = v[v>alpha]
+        xr = x[v<=alpha]
+        yr = y[v<=alpha]
+        vr = v[v<=alpha]
+        ax.scatter(xp, yp, c='k', marker='1', label='Pass')
+        ax.legend(loc=(1.0, 1.0))
+        im = ax.scatter(xr, yr, c=vr, cmap='viridis', marker="s",
+                        vmin=0, vmax=alpha)
+        cticks = np.linspace(0, alpha, 6)
+    else:
+        divnorm = colors.TwoSlopeNorm(vcenter=alpha)
+        im = ax.scatter(x, y, c=v, cmap='seismic_r', norm=divnorm, marker='s',
+                        edgecolors='k', linewidth=0.2)
+        cticks = sorted(np.append(np.linspace(0, 1, 11), alpha))
+
+    ax.set_title(tt)
+    ax.set_xlabel(xl)
+    ax.set_ylabel(yl)
+    fig.colorbar(im, ax=ax, ticks=cticks)
+
     plt.show()
 
 
