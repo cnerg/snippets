@@ -26,7 +26,7 @@ class TestCheckDataMatching(object):
     @pytest.mark.parametrize("set_1, set_2", [
         ({1, 2, 3}, {1, 2, 3, 4}),
         ({'a', 'b', 'c'}, {'a', 'b'}),
-        ({1, 2}, set({})),
+        ({1, 2}, set()),
         ({'a', 'b', 'c'}, {'a', 'b', 'd'})
     ])
     def test_mismatch_err(self, set_1, set_2):
@@ -48,7 +48,7 @@ class TestCheckDataMatching(object):
 
 
 class TestTwoSampleT(object):
-    """Test two_sample_t function"""
+    """Test two_sample_t function."""
 
     @pytest.mark.parametrize("m1, se1, m2, se2, d, exp_t", [
         (1.1, 0.05, 1.2, 0.04, 0, -1.561738),
