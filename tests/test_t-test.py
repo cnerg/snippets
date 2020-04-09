@@ -31,7 +31,7 @@ class TestCheckDataMatching(object):
     def test_mismatch_err(self, set_1, set_2):
         """Test if error is properly raised with mismatching sets."""
         with pytest.raises(KeyError):
-            tt.check_data_matching('file1', set_1, 'file2', set_2)
+            tt.check_data_matching(set_1, set_2, False)
 
 
 class TestTwoSampleT(object):
