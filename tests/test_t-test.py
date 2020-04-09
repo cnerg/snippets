@@ -5,6 +5,7 @@ This module contains a number of pytest-based tests for t_test.py script.
 The following classes/methods are included in this module:
 - TestCheckDataMatching
   * test_mismatch_err
+  * test_mismatch_skip
 - TestTwoSampleT
   * test_t_result
 - TestTTest
@@ -32,6 +33,18 @@ class TestCheckDataMatching(object):
         """Test if error is properly raised with mismatching sets."""
         with pytest.raises(KeyError):
             tt.check_data_matching(set_1, set_2, False)
+
+    @pytest.mark.parametrize("set_1, set_2, exp_set", [
+        ({'k1', 'k2', 'k3'}, {'k1', 'k2', 'k3'}, {'k1', 'k2', 'k3'}),
+        ({1, 2, 3}, {1, 2, 3, 4}, {1, 2, 3}),
+        ({5, 6}, {5}, {5}),
+        ({'a', 'b', 'c'}, {'a', 'd', 'e'}, {'a'}),
+        ({2, 4, 6, 8}, {1, 3, 5, 7}, set()),
+    ])
+    def test_mismatch_skip(self, set_1, set_2, exp_set):
+        """Test if mismatching sets are properly skipped."""
+        obs_set = tt.check_data_matching(set_1, set_2, True)
+        assert obs_set == exp_set
 
 
 class TestTwoSampleT(object):
