@@ -51,6 +51,7 @@ DEFAULT_v = 1  # Default verbosity level.
 DEFAULT_plot = 'histogram'  # Default plot style for t-test results.
 CHOICES_plot = ('histogram', 'heatmap')  # Plot style choices.
 
+
 def load_data(filename):
     """Load data from a file.
 
@@ -130,64 +131,6 @@ def process_2dplot_input(stat):
     xl = "X"
     yl = "Y"
     return (x, y, v, tt, xl, yl)
-
-
-def check_data_matching(set_1, set_2, skip):
-    """Check if two sets of data match each other.
-
-    This function checks if the keywords set of two input data match each other.
-    If 'skip' is True, a set of keywords common to both input data are returned,
-    meaning that mismatching keywords will be skipped without raising errors.
-    If 'skip' is False, any mismatching keyword on either of two input data will
-    raise KeyError with information on which keywords are missing on the data.
-
-    Arguments:
-        set_1 (set): Set of keywords from first input data.
-        set_2 (set): Set of keywords from second input data.
-        skip (bool): Boolean to skip mismatching keywords.
-
-    Returns:
-        common_set (set): Set of keywords common to set_1 and set_2.
-
-    """
-    common_set = set_1
-
-    if set_1 != set_2:
-        err_str = "Data set mismatching."
-        if set_1 - set_2:
-            err_str += " sample_1 missing {0}.".format(set_1 - set_2)
-        if set_2 - set_1:
-            err_str += " sample_2 missing {0}.".format(set_2 - set_1)
-
-        common_set = set_1 & set_2
-
-        if skip:
-            err_str += "\nMismatching keys will be skipped."
-            print(err_str)
-        else:
-            raise KeyError(err_str)
-
-    return common_set
-
-
-def two_sample_t(m1, se1, m2, se2, d):
-    """Calculate two-sample t-statistic.
-
-    This function calculates t-statistic of two-samples comparison.
-
-    Arguments:
-        m1 (float): Sample mean of data 1.
-        se1 (float): Estimated standard error of the mean of data 1.
-        m2 (float): Sample mean of data 2.
-        se2 (float): Estimated standard error of the mean of data 2.
-        d (float): Set discrepancy between two input data, if any.
-
-    Returns:
-        t_stat (float): Calculated t-score.
-
-    """
-    t_stat = ((m1-m2)-d) / math.sqrt(se1**2+se2**2)
-    return t_stat
 
 
 def print_rej_summary(stat, alpha, d, verbose):
@@ -301,6 +244,64 @@ def plot_p_2d(x, y, v, tt, xl, yl, alpha, reject_only=True):
     fig.colorbar(im, ax=ax, ticks=cticks)
 
     plt.show()
+
+
+def check_data_matching(set_1, set_2, skip):
+    """Check if two sets of data match each other.
+
+    This function checks if the keywords set of two input data match each other.
+    If 'skip' is True, a set of keywords common to both input data are returned,
+    meaning that mismatching keywords will be skipped without raising errors.
+    If 'skip' is False, any mismatching keyword on either of two input data will
+    raise KeyError with information on which keywords are missing on the data.
+
+    Arguments:
+        set_1 (set): Set of keywords from first input data.
+        set_2 (set): Set of keywords from second input data.
+        skip (bool): Boolean to skip mismatching keywords.
+
+    Returns:
+        common_set (set): Set of keywords common to set_1 and set_2.
+
+    """
+    common_set = set_1
+
+    if set_1 != set_2:
+        err_str = "Data set mismatching."
+        if set_1 - set_2:
+            err_str += " sample_1 missing {0}.".format(set_1 - set_2)
+        if set_2 - set_1:
+            err_str += " sample_2 missing {0}.".format(set_2 - set_1)
+
+        common_set = set_1 & set_2
+
+        if skip:
+            err_str += "\nMismatching keys will be skipped."
+            print(err_str)
+        else:
+            raise KeyError(err_str)
+
+    return common_set
+
+
+def two_sample_t(m1, se1, m2, se2, d):
+    """Calculate two-sample t-statistic.
+
+    This function calculates t-statistic of two-samples comparison.
+
+    Arguments:
+        m1 (float): Sample mean of data 1.
+        se1 (float): Estimated standard error of the mean of data 1.
+        m2 (float): Sample mean of data 2.
+        se2 (float): Estimated standard error of the mean of data 2.
+        d (float): Set discrepancy between two input data, if any.
+
+    Returns:
+        t_stat (float): Calculated t-score.
+
+    """
+    t_stat = ((m1-m2)-d) / math.sqrt(se1**2+se2**2)
+    return t_stat
 
 
 def t_test(sample_1, sample_2, alpha, d, skip):
