@@ -250,6 +250,52 @@ def plot_p_2d(x, y, v, tt, xl, yl, alpha, reject_only=True):
     plt.show()
 
 
+def check_input_args(sample_1, sample_2, alpha, d, skip):
+    """Check if valid input arguments are provided.
+
+    This function checks if valid input arguments are provided.
+
+    Arguments:
+        sample_1 (dict): Dictionary of {key: [Sample mean, Estimated standard
+            error of the mean, sample size]} pair.
+        sample_2 (dict): Dictionary of {key: [Sample mean, Estimated standard
+            error of the mean, sample size]} pair.
+        alpha (float): Significance level.
+        d (float): Set discrepancy between two input data, if any.
+        skip (bool): Boolean to skip mismatching keywords.
+
+    Returns:
+        None.
+
+    """
+    # Check input data for which t-test will be performed.
+    for i, sample in enumerate([sample_1, sample_2]):
+        sn = "sample_{0}".format(i+1)
+        if not isinstance(sample, dict):
+            raise TypeError("{0} must be a dictionary.".format(sn))
+        for key, val in sample.items():
+            if not isinstace(val, list) or len(val) != 3:
+                raise TypeError("{0}: Value of key '{1}' must be a list
+with 3 elements. Check t_test docstring for valid input.".format(sn, key))
+            if not all(isinstance(v, (float, int)) for v in val):
+                raise TypeError("{0}: Value of key '{1}' must be a list
+of floats or ints.".format(sn, key))
+
+    # Check significance level.
+    if not isinstance(alpha, (float)):
+        raise TypeError("alpha must be a float.")
+    if not 0 < a < 1:
+        raise ValueError("alpha must be in (0, 1) range.")
+
+    # Check discrepancy set between two input data.
+    if not isinstance(d, (float, int)):
+        raise TypeError("d must be a float or an int.")
+
+    # Check the boolean to skip mismatching keywords.
+    if not isinstance(skip, bool):
+        raise TypeError("skip must be a boolean.")
+
+
 def check_data_matching(set_1, set_2, skip):
     """Check if two sets of data match each other.
 
@@ -327,6 +373,7 @@ def t_test(sample_1, sample_2, alpha, d, skip):
             critical t-value, rejection boolean]} pair.
 
     """
+    check_input_args(sample_1, sample_2, alpha, d, skip)
     key_set = check_data_matching(set(sample_1), set(sample_2), skip)
 
     stat = {}
