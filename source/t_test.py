@@ -274,17 +274,17 @@ def check_input_args(sample_1, sample_2, alpha, d, skip):
         if not isinstance(sample, dict):
             raise TypeError("{0} must be a dictionary.".format(sn))
         for key, val in sample.items():
-            if not isinstace(val, list) or len(val) != 3:
-                raise TypeError("{0}: Value of key '{1}' must be a list
+            if not isinstance(val, list) or len(val) != 3:
+                raise TypeError("{0}: Value of key '{1}' must be a list \
 with 3 elements. Check t_test docstring for valid input.".format(sn, key))
             if not all(isinstance(v, (float, int)) for v in val):
-                raise TypeError("{0}: Value of key '{1}' must be a list
+                raise TypeError("{0}: Value of key '{1}' must be a list \
 of floats or ints.".format(sn, key))
 
     # Check significance level.
     if not isinstance(alpha, (float)):
         raise TypeError("alpha must be a float.")
-    if not 0 < a < 1:
+    if not 0 < alpha < 1:
         raise ValueError("alpha must be in (0, 1) range.")
 
     # Check discrepancy set between two input data.
