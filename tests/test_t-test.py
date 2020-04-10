@@ -3,6 +3,8 @@
 This module contains a number of pytest-based tests for t_test.py script.
 
 The following classes/methods are included in this module:
+- TestCheckInputArgs
+  * test_input_err
 - TestCheckDataMatching
   * test_mismatch_err
   * test_mismatch_skip
@@ -18,6 +20,30 @@ import pytest
 from source import t_test as tt
 
 TOL=1e-5  # Tolerance for approximate assertion.
+
+
+class TestCheckInputArgs(object):
+    """Test check_input_args function."""
+
+    @pytest.mark.parametrize("sample_1, sample_2, alpha, d, skip, exp_err", [
+        # Check input data for which t-test will be performed.
+        ({'a': [1, 2, 3]}, "1, 2, 3", 0.05, 0.0, True, TypeError),
+        ([1, 2, 3], {'b': [1, 2, 3]}, 0.05, 0.0, True, TypeError),
+        ({'a': [1.0, 2.0, 3]}, {'b': 3}, 0.05, 0.0, True, TypeError),
+        ({'a': [1.0, 2.0, 3]}, {'b': [1.0, 2.0]}, 0.05, 0.0, True, TypeError),
+        ({'a': [1, 2, 3]}, {'b': [1, "2", 3]}, 0.05, 0.0, True, TypeError),
+        # Check significance level.
+        ({'a': [1, 2, 3]}, {'b': [1, 2, 3]}, "0.05", 0.0, True, TypeError),
+        ({'a': [1, 2, 3]}, {'b': [1, 2, 3]}, 5.0, 0.0, True, ValueError),
+        # Check discrepancy set between two input data.
+        ({'a': [1, 2, 3]}, {'b': [1, 2, 3]}, 0.05, [0.0], True, TypeError),
+        # Check the boolean to skip mismatching keywords.
+        ({'a': [1, 2, 3]}, {'b': [1, 2, 3]}, 0.05, 0.0, "True", TypeError)
+    ])
+    def test_input_err(self, sample_1, sample_2, alpha, d, skip, exp_err):
+        """Test if error is properly raised with invalid input arguments."""
+        with pytest.raises(exp_err):
+            tt.check_input_args(sample_1, sample_2, alpha, d, skip)
 
 
 class TestCheckDataMatching(object):
