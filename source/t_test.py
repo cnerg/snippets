@@ -1,6 +1,8 @@
 #!/usr/bin/python
 """Run t-tests to determine if two sets of data are significantly different.
 
+Author: YoungHui Park
+
 This script runs t-tests comparing two sets of data in two different files.
 t-test is a statistical calculation that can be used to determine if there is a
 statistically significant difference between two sample groups.
@@ -38,11 +40,14 @@ Usage:
 
 """
 
+# Standard libraries.
 import argparse
 import math
-import numpy as np
-import matplotlib.pyplot as plt
+
+# Third party libraries.
 from matplotlib import colors
+import matplotlib.pyplot as plt
+import numpy as np
 from scipy import stats
 
 DEFAULT_a = 0.05  # Default significance level.
