@@ -9,7 +9,7 @@ In this module, unpaired equal variance two-sample t-test will be conducted for
 comparison of data that are hypothesized to be taken from an identical
 distribution.
 
-Two dictionaries are provided as input of the main `t_test` function with the
+Two dictionaries are provided as input of the main 't_test' function with the
 form {key: [Sample mean, Estimated standard error of the mean, sample size]}.
 The function calculates a t-value along with associated p-value and critical
 value for each keyed pair, using the sample data and significance level.
@@ -51,6 +51,8 @@ DEFAULT_v = 1  # Default verbosity level.
 DEFAULT_plot = 'histogram'  # Default plot style for t-test results.
 CHOICES_plot = ('histogram', 'heatmap')  # Plot style choices.
 
+
+# ---- Customizable data loading/processing and plotting functions ---- #
 
 def load_data(filename):
     """Load data from a file.
@@ -249,6 +251,8 @@ def plot_p_2d(x, y, v, tt, xl, yl, alpha, reject_only=True):
 
     plt.show()
 
+
+# ---- Main t-test running functions ---- #
 
 def check_input_args(sample_1, sample_2, alpha, d, skip):
     """Check if valid input arguments are provided.

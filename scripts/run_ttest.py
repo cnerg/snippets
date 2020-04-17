@@ -3,7 +3,7 @@
 
 Author: YoungHui Park
 
-This is a wrapper script that runs `t_test` function from `twosample_ttest`
+This is a wrapper script that runs 't_test' function from `twosample_ttest`
 module.
 
 Usage:
