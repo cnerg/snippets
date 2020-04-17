@@ -3,7 +3,8 @@
 
 Author: YoungHui Park
 
-This is a wrapper script that runs `t_test` function from `t_test` module.
+This is a wrapper script that runs `t_test` function from `twosample_ttest`
+module.
 
 Usage:
 - `filenames`: Input data filenames. Must be two strings.
@@ -25,7 +26,7 @@ Usage:
 import argparse
 
 # Local modules.
-from t_test.t_test import *
+from t_test.twosample_ttest import *
 
 
 # Main.

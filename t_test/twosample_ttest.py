@@ -31,7 +31,7 @@ Alternate hypothesis: (mean_1 - mean_2) != d
   discrepancy between the two means.
 
 Usage:
-from t_test import t_test as tt
+from t_test import twosample_ttest as tt
 stat = tt.t_test(sample_1, sample_2, alpha, d, skip)
 
 """
