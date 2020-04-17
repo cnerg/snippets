@@ -338,7 +338,7 @@ def check_data_matching(set_1, set_2, skip):
     return common_set
 
 
-def two_sample_t(m1, se1, m2, se2, d):
+def calc_twosample_tvalue(m1, se1, m2, se2, d):
     """Calculate two-sample t-statistic.
 
     This function calculates t-statistic of two-samples comparison.
@@ -385,7 +385,7 @@ def t_test(sample_1, sample_2, alpha, d, skip):
         [m1, se1, n1] = sample_1[key]
         [m2, se2, n2] = sample_2[key]
 
-        t_val = two_sample_t(m1, se1, m2, se2, d)
+        t_val = calc_twosample_tvalue(m1, se1, m2, se2, d)
         df = n1 + n2 - 2  # Degree of freedom.
         p_val = (1 - stats.t.cdf(abs(t_val), df)) * 2  # Cumulative probability.
 
