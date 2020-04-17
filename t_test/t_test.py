@@ -2,11 +2,22 @@
 
 Author: YoungHui Park
 
-This script runs t-tests comparing two sets of data in two different files.
+This module runs t-tests comparing two samples.
 t-test is a statistical calculation that can be used to determine if there is a
-statistically significant difference between two sample groups.
-In this script, unpaired equal variance two-sample t-test will be conducted for
-comparison of data that are assumed to be taken from an identical distribution.
+statistically significant difference between two samples.
+In this module, unpaired equal variance two-sample t-test will be conducted for
+comparison of data that are hypothesized to be taken from an identical
+distribution.
+
+Two dictionaries are provided as input of the main `t_test` function with the
+form {key: [Sample mean, Estimated standard error of the mean, sample size]}.
+The function calculates a t-value along with associated p-value and critical
+value for each keyed pair, using the sample data and significance level.
+Then it determines whether the null hypothesis is rejected or accepted by
+comparing p-value with significance level (or alternatively, t-value with
+critical value).
+Finally, it returns a dictionary with summaries of t-test in the form of
+{key: (t-value, degrees of freedom, p-value, critical value, reject/accept)}.
 
 Assumptions:
 - Population follows normal distribution, or n_1 + n_2 > 40,
@@ -19,23 +30,9 @@ Alternate hypothesis: (mean_1 - mean_2) != d
   where mean_1 and mean_2 are sample means of two data sets and d is a set
   discrepancy between the two means.
 
-Note:
-- With a sample size approaching to infinity, t-distribution becomes
-  z-distribution.
-
 Usage:
-- `filenames`: Input data filenames. Must be two strings.
-- `--alpha`(`-a`): Target significance level.
-- `--discrepancy`(`-d`): Set discrepancy between two data set.
-- `--skip`(`-s`): Skip mismatching data points instead of raising errors.
-- `--verbose`(`-v`): Verbosity level of t-test result.
-- `--plot`(`-p`): Plot style.
-* $ python3 t_test.py file1 file2 -a 0.001 -d 0.04 -s -v 2 -p 'histogram'
-  -> Calculate t-statistic with significance level of 0.001 (or 0.1 %)
-  for each pair of data in `file1` and file2` that are set to have discrepancy
-  of 0.04. Skip any mismatching data points. Display the number of pairs that
-  reject null hypothesis along with details of all rejected cases, and plot a
-  histogram of p-values.
+from t_test import t_test as tt
+stat = tt.t_test(sample_1, sample_2, alpha, d, skip)
 
 """
 
