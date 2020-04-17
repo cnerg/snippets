@@ -34,6 +34,20 @@ Usage:
 from t_test import twosample_ttest as tt
 stat = tt.t_test(sample_1, sample_2, alpha, d, skip)
 
+Following functions are included in this module:
+* Customizable data loading/processing and plotting functions
+  - load_data
+  - process_data
+  - process_2dplot_input
+  - print_rej_summary
+  - plot_p_hist
+  - plot_p_2d
+* Main t-test running functions
+  - check_input_args
+  - check_data_matching
+  - calc_twosample_tvalue
+  - t_test
+
 """
 
 # Standard libraries.
