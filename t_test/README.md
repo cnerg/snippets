@@ -11,6 +11,24 @@ Nuclear engineering relevant examples of such data include *k<sub>eff</sub>* and
 tally results calculated by MCNP.
 
 
+## Table of Contents
+
+- [t-test?](#t-test?)
+  - [Procedure](#procedure)
+  - [Null hypothesis](#null-hypothesis)
+  - [t-value](#t-value)
+  - [t-distribution](#t-distribution)
+  - [Two-tailed vs. One-tailed test](#two-tailed-vs.-one-tailed-test)
+- [Difference with z-test?](#difference-with-z-test?)
+- [How to interpret t-test result?](#how-to-interpret-t-test-result?)
+- [Related modules, scripts and tests](#related-modules,-scripts-and-tests)
+  - [`twosample_ttest.py`](#`twosample_ttest.py`)
+  - [`run_twosample_ttest.py`](#`run_twosample_ttest.py`)
+  - [`test_twosample_ttest.py`](#`test_twosample_ttest.py`)
+- [References](#references)
+- [](#)
+
+
 ## t-test?
 
 The t-tests are handy hypothesis tests in statistics when you want to compare
