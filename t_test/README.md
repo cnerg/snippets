@@ -65,20 +65,20 @@ for the entire population.
 
 1. Determine a null and alternate hypothesis.
    For example:
-   *H<sub>0</sub>*: $\mu$<sub>1</sub> = $\mu$<sub>2</sub>
-   *H<sub>a</sub>*: $\mu$<sub>1</sub> $\neq$ $\mu$<sub>2</sub>
-   where $\mu$<sub>1</sub> is the mean of population 1 and $\mu$<sub>1</sub> is
+   *H<sub>0</sub>*: <mu><sub>1</sub> = <mu><sub>2</sub>
+   *H<sub>a</sub>*: <mu><sub>1</sub> <ne> <mu><sub>2</sub>
+   where <mu><sub>1</sub> is the mean of population 1 and <mu><sub>1</sub> is
    the mean of population 2.
 
 2. Determine a significance level.
 
-   The significance level, also denoted as $\alpha$, is the probability of
+   The significance level, also denoted as <alpha>, is the probability of
    rejecting the null hypothesis when it is true.
    For example, a significance level of 0.05 indicates a 5 % risk of concluding
    that a difference exists when there is no actual difference.
 
    The choice of significance level is arbitrary.
-   Conventionally the 5 %, 1 % and 0.1 % ($\alpha$ = 0.05, 0.01 and 0.001)
+   Conventionally the 5 %, 1 % and 0.1 % (<alpha> = 0.05, 0.01 and 0.001)
    levels have been used.
    Scientists have found that a significance level of 5 % is a good balance
    between Type I error (false rejection of the null hypothesis) and Type II
@@ -118,10 +118,10 @@ for the entire population.
      p-value can be obtained using the t-value and cumulative distribution
      function (CDF) of the t-distribution.
      The p-value can then be compared to the chosen significance level
-     ($\alpha$) to determine if the null hypothesis can be rejected.
+     (<alpha>) to determine if the null hypothesis can be rejected.
 
-     - p-value $>$ $\alpha$: Accept null hypothesis.
-     - p-value $\leq$ $\alpha$: Reject null hypothesis and accept alternative
+     - p-value > <alpha>: Accept null hypothesis.
+     - p-value <le> <alpha>: Reject null hypothesis and accept alternative
        hypothesis.
 
    * t<sub>crit</sub>
@@ -130,8 +130,8 @@ for the entire population.
      The observation values in the population beyond the critical value are
      often called the critical region or the region of rejection.
 
-     - |t-value| $\leq$ t<sub>crit</sub>: Accept null hypothesis.
-     - |t-value| $>$ t<sub>crit</sub>: Reject the null hypothesis and accept
+     - |t-value| <le> t<sub>crit</sub>: Accept null hypothesis.
+     - |t-value| > t<sub>crit</sub>: Reject the null hypothesis and accept
        alternative hypothesis.
 
      A critical value can be obtained using percent point function (PPF).
