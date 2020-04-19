@@ -55,10 +55,11 @@ if __name__ == """__main__""":
                         + "2: Display all rejected cases. " \
                         + "Default: {0}".format(DEFAULT_v))
 
-    parser.add_argument("--plot", "-p", type=str, choices=CHOICES_plot,
-                        default=DEFAULT_plot,
-                        help="Plot style. Choices: {0} ".format(CHOICES_plot) \
-                        + "Default: {0}".format(DEFAULT_plot))
+    parser.add_argument("--plot", "-p", type=str, nargs=2,
+                        metavar=("plot_type", "plot_filename"),
+                        help="Plot two-sample t-test results. " \
+                        + "Plot type choices: {0}, ".format(CHOICES_plot_type) \
+                        + "Default filename: {0}".format(DEFAULT_plot_name))
 
     args = parser.parse_args()
 
@@ -76,8 +77,12 @@ if __name__ == """__main__""":
     if args.verbose:
         print_rej_summary(stat, args.alpha, args.discrepancy, args.verbose)
 
-    if args.plot == 'histogram':
-        plot_p_hist(stat, args.alpha)
-    elif args.plot == 'heatmap':
-        (x, y, v, tt, xl, yl) = process_2dplot_input(stat)
-        plot_p_2d(x, y, v, tt, xl, yl, args.alpha)
+    if args.plot:
+        (plot_type, plot_filename) = args.plot
+        if plot_type == 'histogram':
+            plot_p_hist(stat, args.alpha, plot_filename)
+        elif plot_type == 'heatmap':
+            (x, y, v, tt, xl, yl) = process_2dplot_input(stat)
+            plot_p_2d(x, y, v, tt, xl, yl, args.alpha, plot_filename)
+        print("Two-sample t-test results are plotted as {0} in {1}.".format(
+            plot_type, plot_filename))

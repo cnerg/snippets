@@ -62,8 +62,8 @@ from scipy import stats
 DEFAULT_a = 0.05  # Default significance level.
 DEFAULT_d = 0  # Default discrepancy between two means.
 DEFAULT_v = 1  # Default verbosity level.
-DEFAULT_plot = 'histogram'  # Default plot style for t-test results.
-CHOICES_plot = ('histogram', 'heatmap')  # Plot style choices.
+DEFAULT_plot_name = "plot_twosample-ttest.png"  # Default plot filename.
+CHOICES_plot_type = ('histogram', 'heatmap')  # Plot style choices.
 
 NDIGITS = 5  # Default precision after the decimal point.
 
@@ -184,7 +184,7 @@ mean_2) = {2} with alpha = {3}\n".format(len(rejected), len(stat), d, alpha)
     print(r_str)
 
 
-def plot_p_hist(stat, alpha):
+def plot_p_hist(stat, alpha, plot_fname):
     """Plot histogram of calculated p-values.
 
     This function generates a historgam of p-values for further analysis.
@@ -193,6 +193,7 @@ def plot_p_hist(stat, alpha):
         stat (dict): Dictionary of {key, [t-vaue, degree of freedom, p-value,
             critical t-value, rejection boolean]} pair.
         alpha (float): Significance level.
+        plot_fname (str): Filename for the output histogram.
 
     Returns:
         None.
@@ -210,10 +211,10 @@ def plot_p_hist(stat, alpha):
     ax.set_xlabel("p-value [-]")
     ax.set_xticks(np.arange(0.0, 1.0, step=alpha), minor=True)
     ax.set_ylabel("Counts [#]")
-    plt.show()
+    plt.savefig(plot_fname)
 
 
-def plot_p_2d(x, y, v, tt, xl, yl, alpha, reject_only=True):
+def plot_p_2d(x, y, v, tt, xl, yl, alpha, plot_fname, reject_only=True):
     """Plot calculated p-values in 2D heatmap.
 
     This function generates a 2D heatmap of p-values.
@@ -226,6 +227,7 @@ def plot_p_2d(x, y, v, tt, xl, yl, alpha, reject_only=True):
         xl (str): x-axis label.
         yl (str): y-axis label.
         alpha (float): Significance level.
+        plot_fname (str): Filename for the output histogram.
         reject_only (bool): True if sequential heatmap is generated for rejected
             cases (p <= alpha) and accepted cases (p > alpha) are replaced by
             'pass' marker (tri_down), False if diverging heatmap is generated
@@ -265,7 +267,7 @@ def plot_p_2d(x, y, v, tt, xl, yl, alpha, reject_only=True):
     ax.set_ylabel(yl)
     fig.colorbar(im, ax=ax, ticks=cticks)
 
-    plt.show()
+    plt.savefig(plot_fname)
 
 
 # ---- Main t-test running functions ---- #
