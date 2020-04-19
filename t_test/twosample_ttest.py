@@ -107,6 +107,7 @@ def process_data(rdata, default_n=1000):
     Arguments:
         rdata (dict): Dictionary of raw data.
         default_n (int): Default sample size if not specified.
+            Default = 1000
 
     Returns:
         pdata (dict): Dictionary of processed data in the form of
@@ -234,6 +235,7 @@ def plot_p_2d(x, y, v, tt, xl, yl, alpha, plot_fname, reject_only=True):
             over the entire range with center color set to be the alpha value
             (Note that this can lead to significantly different color scales
             between rejected cases and accepted cases.).
+            Default = True
 
     Returns:
         None.

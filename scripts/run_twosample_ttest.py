@@ -31,7 +31,7 @@ from t_test.twosample_ttest import *
 
 # Main.
 if __name__ == """__main__""":
-    parser = argparse.ArgumentParser(description="Run student's t-test.")
+    parser = argparse.ArgumentParser(description="Run two-sample t-test.")
 
     parser.add_argument("filenames", type=str, nargs=2,
                         help="Input data filenames. Must be two strings.")
