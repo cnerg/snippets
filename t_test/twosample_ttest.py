@@ -85,7 +85,7 @@ def load_data(filename):
 
     data = {}
     # Create a dictionary (`key`, `val`) where:
-    # - key: Reference keyword for two-sample t-statistic calculation
+    # - key: Reference keyword for two-sample t-value calculation
     # - val: List of parsed data.
     # Example:
     # for line in lines[1:]:
@@ -96,11 +96,11 @@ def load_data(filename):
 
 
 def process_data(rdata, default_n=1000):
-    """Process data for t-statistic calculation.
+    """Process data for t-value calculation.
 
     This function performs pre-processing of given raw data
     to calculate mean, standard error and sample size that are required for
-    t-statistic calculation.
+    t-value calculation.
 
     Arguments:
         rdata (dict): Dictionary of raw data.
@@ -112,7 +112,7 @@ def process_data(rdata, default_n=1000):
 
     """
     pdata = {}
-    # Note that a t-statistic will be calculated for each pair of dictionary.
+    # Note that a t-value will be calculated for each pair of dictionary.
     # Example:
     # for key, val in rdata.items():
     #     val.append(default_n)
