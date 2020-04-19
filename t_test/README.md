@@ -13,20 +13,19 @@ tally results calculated by MCNP.
 
 ## Table of Contents
 
-- [t-test?](#t-test?)
+- [t-test?](#t-test)
   - [Procedure](#procedure)
   - [Null hypothesis](#null-hypothesis)
   - [t-value](#t-value)
   - [t-distribution](#t-distribution)
-  - [Two-tailed vs. One-tailed test](#two-tailed-vs.-one-tailed-test)
-- [Difference with z-test?](#difference-with-z-test?)
-- [How to interpret t-test result?](#how-to-interpret-t-test-result?)
-- [Related modules, scripts and tests](#related-modules,-scripts-and-tests)
-  - [`twosample_ttest.py`](#`twosample_ttest.py`)
-  - [`run_twosample_ttest.py`](#`run_twosample_ttest.py`)
-  - [`test_twosample_ttest.py`](#`test_twosample_ttest.py`)
+  - [Two-tailed vs. One-tailed test](#two-tailed-vs-one-tailed-test)
+- [Difference with z-test?](#difference-with-z-test)
+- [How to interpret t-test result?](#how-to-interpret-t-test-result)
+- [Related modules, scripts and tests](#related-modules-scripts-and-tests)
+  - [`twosample_ttest.py`](#twosample-ttestpy)
+  - [`run_twosample_ttest.py`](#run-twosample-ttestpy)
+  - [`test_twosample_ttest.py`](#test-twosample-ttestpy)
 - [References](#references)
-- [](#)
 
 
 ## t-test?
@@ -64,10 +63,13 @@ for the entire population.
 ### Procedure
 
 1. Determine a null and alternate hypothesis.
+
    For example:
-   *H<sub>0</sub>*: μ<sub>1</sub> = μ<sub>2</sub>
-   *H<sub>a</sub>*: μ<sub>1</sub> <ne> μ<sub>2</sub>
-   where μ<sub>1</sub> is the mean of population 1 and μ<sub>1</sub> is
+
+   - *H<sub>0</sub>*: μ<sub>1</sub> = μ<sub>2</sub>
+   - *H<sub>a</sub>*: μ<sub>1</sub> ≠ μ<sub>2</sub>
+
+   where μ<sub>1</sub> is the mean of population 1 and μ<sub>2</sub> is
    the mean of population 2.
 
 2. Determine a significance level.
@@ -277,7 +279,7 @@ Usage:
 ```shell
 $ python3 t_test.py file1 file2 -a 0.01 -d 0.04 -s -v 2 -p histogram fig_h.png
 ```
-$\rightarrow$ Calculate t-statistic with significance level of 0.01 (or 1 %)
+→ Calculate t-statistic with significance level of 0.01 (or 1 %)
 for each pair of data in `file1` and `file2` that are set to have discrepancy
 of 0.04. Skip any mismatching data points. Display the number of pairs that
 reject null hypothesis along with details of all rejected cases, and save a
