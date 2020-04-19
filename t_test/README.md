@@ -22,9 +22,9 @@ tally results calculated by MCNP.
 - [Difference with z-test?](#difference-with-z-test)
 - [How to interpret t-test result?](#how-to-interpret-t-test-result)
 - [Related modules, scripts and tests](#related-modules-scripts-and-tests)
-  - [`twosample_ttest.py`](#twosample-ttestpy)
-  - [`run_twosample_ttest.py`](#run-twosample-ttestpy)
-  - [`test_twosample_ttest.py`](#test-twosample-ttestpy)
+  - [`twosample_ttest.py`](#twosample_ttestpy)
+  - [`run_twosample_ttest.py`](#run_twosample_ttestpy)
+  - [`test_twosample_ttest.py`](#test_twosample_ttestpy)
 - [References](#references)
 
 
