@@ -65,6 +65,8 @@ DEFAULT_v = 1  # Default verbosity level.
 DEFAULT_plot = 'histogram'  # Default plot style for t-test results.
 CHOICES_plot = ('histogram', 'heatmap')  # Plot style choices.
 
+NDIGITS = 5  # Default precision after the decimal point.
+
 
 # ---- Customizable data loading/processing and plotting functions ---- #
 
@@ -373,7 +375,7 @@ def calc_twosample_tvalue(m1, sd1, n1, m2, sd2, n2, d):
     """
     sp = math.sqrt(((n1-1)*sd1**2+(n2-1)*sd2**2) / (n1+n2-2))
     t_val = ((m1-m2)-d) / (sp*math.sqrt(1/n1+1/n2))
-    return t_val
+    return round(t_val, NDIGITS)
 
 
 def t_test(sample_1, sample_2, alpha, d, skip):
@@ -415,7 +417,7 @@ def t_test(sample_1, sample_2, alpha, d, skip):
         p_val = (1 - stats.t.cdf(abs(t_val), df)) * 2  # Cumulative probability.
 
         # Critical t-value, two-tailed.
-        t_crit = stats.t.ppf(1.0 - alpha/2.0, df)
+        t_crit = round(stats.t.ppf(1.0 - alpha/2.0, df), NDIGITS)
         if abs(t_val) <= t_crit:
             reject = False
         else:
