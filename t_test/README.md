@@ -216,6 +216,65 @@ Determining which case is more likely requires subject area knowledge and
 replicate studies.
 
 
+## Related modules, scripts and tests
+
+### `twosample_ttest.py`
+
+This is the main module for unpaired equal variance two-sample t-test,
+located in `t_test` directory.
+It contains the main function **t_test** that calls sub-functions and runs
+t-tests, along with customizable data loading/processing and plotting functions.
+
+Usage:
+
+- Input:
+  - `sample_1` & `sample_2`: Dictionary of {key: [Sample mean, Estimated standard
+    error of the mean, sample size]} pair.
+  - `alpha`: Significance level.
+  - `d`: Set discrepancy between two input data, if any.
+  - `skip`: Boolean to skip mismatching keywords.
+- Output:
+  - `stat`: Dictionary of {key, [t-vaue, degree of freedom, p-value,
+    critical t-value, rejection boolean]} pair.
+- Example:
+```python
+from t_test import twosample_ttest as tt
+stat = tt.t_test(sample_1, sample_2, alpha, d, skip)
+```
+
+### `run_twosample_ttest.py`
+
+This is a wrapper script, located in `scripts` directory, that runs
+`twosample_ttest.py`.
+
+Usage:
+- Command line arguments:
+  - `filenames`: Input data filenames. Must be two strings.
+  - `--alpha`(`-a`): Target significance level.
+  - `--discrepancy`(`-d`): Set discrepancy between two data set.
+  - `--skip`(`-s`): Skip mismatching data points instead of raising errors.
+  - `--verbose`(`-v`): Verbosity level of t-test result.
+  - `--plot`(`-p`): Plot style.
+- Example:
+```shell
+$ python3 t_test.py file1 file2 -a 0.01 -d 0.04 -s -v 2 -p 'histogram'
+```
+$\rightarrow$ Calculate t-statistic with significance level of 0.01 (or 1 %)
+for each pair of data in `file1` and file2` that are set to have discrepancy
+of 0.04. Skip any mismatching data points. Display the number of pairs that
+reject null hypothesis along with details of all rejected cases, and plot a
+histogram of p-values.
+
+### `test_twosample_ttest.py`
+
+This is a unit test file, located in `tests` directory, run through *pytest*
+that tests main t-test running functions in `twosample_ttest.py`
+
+Usage:
+```shell
+pytest tests/test_twosample_ttest.py -vvv
+```
+
 ## References
 
 [[1]](https://blog.minitab.com/blog/adventures-in-statistics-2/understanding-t-tests-t-values-and-t-distributions)
