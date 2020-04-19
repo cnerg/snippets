@@ -82,6 +82,8 @@ def load_data(filename):
         data (dict): Dictionary of parsed data.
 
     """
+    print("- Loading data from '{0}'.".format(filename))
+
     with open(filename, 'r') as f:
         lines = f.readlines()
 
@@ -114,6 +116,8 @@ def process_data(rdata, default_n=1000):
             [mean, standard error, sample size].
 
     """
+    print("- Processing loaded data.")
+
     pdata = {}
     # Note that a t-value will be calculated for each pair of dictionary.
     # Example:
@@ -176,12 +180,12 @@ def print_rej_summary(stat, alpha, d, verbose):
 
     """
     rejected = [key for key, val in stat.items() if val[4]]
-    r_str = "t-test: {0} out of {1} cases reject null hypothesis (mean_1 - \
-mean_2) = {2} with alpha = {3}\n".format(len(rejected), len(stat), d, alpha)
+    r_str = "- test result: {0} out of {1} cases reject null hypothesis (mean_1\
+ - mean_2) = {2} with alpha = {3}".format(len(rejected), len(stat), d, alpha)
     if verbose > 1:
-        r_str += "Rejected cases:"
+        r_str += "\n  Rejected cases:"
         for key in rejected:
-            r_str += "\n- '{0}' with p-value {1:.5e}".format(key, stat[key][2])
+            r_str += "\n  '{0}' with p-value {1:.5e}".format(key, stat[key][2])
     print(r_str)
 
 
@@ -341,7 +345,7 @@ def check_data_matching(set_1, set_2, skip):
     common_set = set_1
 
     if set_1 != set_2:
-        err_str = "Data set mismatching."
+        err_str = "  Data set mismatching."
         if set_1 - set_2:
             err_str += " sample_1 missing {0}.".format(set_1 - set_2)
         if set_2 - set_1:
@@ -350,7 +354,7 @@ def check_data_matching(set_1, set_2, skip):
         common_set = set_1 & set_2
 
         if skip:
-            err_str += "\nMismatching keys will be skipped."
+            err_str += "\n  Mismatching keys will be skipped."
             print(err_str)
         else:
             raise KeyError(err_str)
@@ -401,6 +405,8 @@ def t_test(sample_1, sample_2, alpha, d, skip):
             critical t-value, rejection boolean]} pair.
 
     """
+    print("- Running two-sample t-test.")
+
     check_input_args(sample_1, sample_2, alpha, d, skip)
     key_set = check_data_matching(set(sample_1), set(sample_2), skip)
 

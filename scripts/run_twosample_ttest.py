@@ -84,5 +84,5 @@ if __name__ == """__main__""":
         elif plot_type == 'heatmap':
             (x, y, v, tt, xl, yl) = process_2dplot_input(stat)
             plot_p_2d(x, y, v, tt, xl, yl, args.alpha, plot_filename)
-        print("Two-sample t-test results are plotted as {0} in {1}.".format(
+        print("- Two-sample t-test results are plotted as {0} in {1}.".format(
             plot_type, plot_filename))
