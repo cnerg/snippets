@@ -402,15 +402,15 @@ def t_test(sample_1, sample_2, alpha, d, skip):
 
     stat = {}
     for key in key_set:
-        [m1, se1, n1] = sample_1[key]
-        [m2, se2, n2] = sample_2[key]
+        [m1, sem1, n1] = sample_1[key]
+        [m2, sem2, n2] = sample_2[key]
 
         # Convert estimated standard error of the mean (type of data typically
         # provided by Monte Carlo codes such as MCNP as uncertainty of
         # calculations) to sample standard deviation (type of data required by
         # t-value calculation).
-        sd1 = se1 * math.sqrt(n1)
-        sd2 = se2 * math.sqrt(n2)
+        sd1 = sem1 * math.sqrt(n1)
+        sd2 = sem2 * math.sqrt(n2)
 
         t_val = calc_twosample_tvalue(m1, sd1, n1, m2, sd2, n2, d)
         df = n1 + n2 - 2  # Degree of freedom.
