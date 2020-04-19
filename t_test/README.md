@@ -254,20 +254,20 @@ Usage:
   - `--discrepancy`(`-d`): Set discrepancy between two data set.
   - `--skip`(`-s`): Skip mismatching data points instead of raising errors.
   - `--verbose`(`-v`): Verbosity level of t-test result.
-  - `--plot`(`-p`): Plot style.
+  - `--plot`(`-p`): Plot type and filename.
 - Example:
 ```shell
-$ python3 t_test.py file1 file2 -a 0.01 -d 0.04 -s -v 2 -p 'histogram'
+$ python3 t_test.py file1 file2 -a 0.01 -d 0.04 -s -v 2 -p histogram fig_h.png
 ```
 $\rightarrow$ Calculate t-statistic with significance level of 0.01 (or 1 %)
 for each pair of data in `file1` and file2` that are set to have discrepancy
 of 0.04. Skip any mismatching data points. Display the number of pairs that
-reject null hypothesis along with details of all rejected cases, and plot a
-histogram of p-values.
+reject null hypothesis along with details of all rejected cases, and save a
+histogram of p-values in `fig_h.png`.
 
 ### `test_twosample_ttest.py`
 
-This is a unit test file, located in `tests` directory, run through *pytest*
+This is a unit test file, located in `tests` directory, invoked by *pytest*
 that tests main t-test running functions in `twosample_ttest.py`
 
 Usage:

@@ -1,6 +1,7 @@
-"""Test module for t_test.py.
+"""Test module for twosample_ttest.py.
 
-This module contains a number of pytest-based tests for t_test.py script.
+This is a unit test file to be invoked by pytest that tests main t-test running
+functions of `twosample_ttest.py` in `t_test` directory.
 
 The following classes/methods are included in this module:
 - TestCheckInputArgs
