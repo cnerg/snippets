@@ -37,7 +37,7 @@ hypothesized value (one-sample t-test), the means of two independent samples
 (two-sample t-test), or the difference between paired samples (paired t-test).
 
 The term t-test refers to the fact that these hypothesis tests use
-[t-values](###t-value), a type of what are called test statistics,
+[t-values](#t-value), a type of what are called test statistics,
 to evaluate your sample data.
 A test statistic is a standardized value that is calculated from sample data
 during a hypothesis test.
