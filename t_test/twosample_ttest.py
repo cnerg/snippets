@@ -352,24 +352,28 @@ def check_data_matching(set_1, set_2, skip):
     return common_set
 
 
-def calc_twosample_tvalue(m1, se1, m2, se2, d):
-    """Calculate two-sample t-statistic.
+def calc_twosample_tvalue(m1, sd1, n1, m2, sd2, n2, d):
+    """Calculate two-sample t-value.
 
-    This function calculates t-statistic of two-samples comparison.
+    This function calculates t-value for two-sample pooled t-test
+    (equal variance).
 
     Arguments:
-        m1 (float): Sample mean of data 1.
-        se1 (float): Estimated standard error of the mean of data 1.
-        m2 (float): Sample mean of data 2.
-        se2 (float): Estimated standard error of the mean of data 2.
+        m1 (float): Mean of sample 1.
+        sd1 (float): Standard deviation of sample 1.
+        n1 (float): Size of sample 1.
+        m2 (float): Mean of sample 2.
+        sd2 (float): Standard deviation of sample 2.
+        n2 (float): Size of sample 2.
         d (float): Set discrepancy between two input data, if any.
 
     Returns:
-        t_stat (float): Calculated t-score.
+        t_val (float): Calculated t-value.
 
     """
-    t_stat = ((m1-m2)-d) / math.sqrt(se1**2+se2**2)
-    return t_stat
+    sp = math.sqrt(((n1-1)*sd1**2+(n2-1)*sd2**2) / (n1+n2-2))
+    t_val = ((m1-m2)-d) / (sp*math.sqrt(1/n1+1/n2))
+    return t_val
 
 
 def t_test(sample_1, sample_2, alpha, d, skip):
@@ -399,7 +403,7 @@ def t_test(sample_1, sample_2, alpha, d, skip):
         [m1, se1, n1] = sample_1[key]
         [m2, se2, n2] = sample_2[key]
 
-        t_val = calc_twosample_tvalue(m1, se1, m2, se2, d)
+        t_val = calc_twosample_tvalue(m1, sd1, n1, m2, sd2, n2, d)
         df = n1 + n2 - 2  # Degree of freedom.
         p_val = (1 - stats.t.cdf(abs(t_val), df)) * 2  # Cumulative probability.
 
