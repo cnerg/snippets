@@ -238,3 +238,4 @@ replicate studies.
 [[19]](https://en.wikipedia.org/wiki/Student%27s_t-distribution)
 [[20]](https://en.wikipedia.org/wiki/Null_hypothesis)
 [[21]](https://en.wikipedia.org/wiki/P-value)
+[[22]](https://en.wikipedia.org/wiki/Standard_error#Standard_error_of_the_mean)
