@@ -8,7 +8,7 @@ The following classes/methods are included in this module:
 - TestCheckDataMatching
   * test_mismatch_err
   * test_mismatch_skip
-- TestTwoSampleT
+- TestCaclTwosampleTvalue
   * test_t_result
 - TestTTest
   * test_stat_result
@@ -73,8 +73,8 @@ class TestCheckDataMatching(object):
         assert obs_set == exp_set
 
 
-class TestTwoSampleT(object):
-    """Test two_sample_t function."""
+class TestCalcTwosampleTvalue(object):
+    """Test calc_twosample_tvalue function."""
 
     @pytest.mark.parametrize("m1, se1, m2, se2, d, exp_t", [
         (1.1, 0.05, 1.2, 0.04, 0, -1.561738),
@@ -83,7 +83,7 @@ class TestTwoSampleT(object):
     ])
     def test_t_result(self, m1, se1, m2, se2, d, exp_t):
         """Test if the function properly calculates t-statistic."""
-        obs_t = tt.two_sample_t(m1, se1, m2, se2, d)
+        obs_t = tt.calc_twosample_tvalue(m1, se1, m2, se2, d)
         assert obs_t == pytest.approx(exp_t, abs=TOL)
 
 
