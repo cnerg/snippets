@@ -15,8 +15,38 @@ For background information on the t-test, read [Theory](THEORY.md).
 
 ## Running two-sample t-test
 
-This section describes modules, scripts and tests related to running two-sample
-t-test.
+This section describes prerequisites, modules, scripts and tests related to
+running two-sample t-test.
+
+
+### Prerequisites
+
+1. Determine a null and alternate hypothsis.
+
+   The null and alternate hypothesis are pre-defined as following, and users
+   only need to provide expected/known discrepancy between two distributions.
+   Default: 0
+
+   - *H<sub>0</sub>*: μ<sub>1</sub> - μ<sub>2</sub> = d
+   - *H<sub>a</sub>*: μ<sub>1</sub> - μ<sub>2</sub> ≠ d
+
+   where μ<sub>1</sub> is the mean of population 1, μ<sub>2</sub> is the mean of
+   population 2, and d is the expected/known discrepancy between the two means.
+
+2. Determine a significance level.
+
+   Choose a significance level (α) for your t-tests. It will be used as a
+   criterion for determining rejection/acception of the null hypothesis.
+   Default: 0.05 (5 %)
+
+3. Populate data loading/processing functions.
+
+   Templates with input/output requirements are provided for functions
+   `load_data`, `process_data` and `process_2dplot_input` in
+   `twosample_ttest.py` module.
+   Populate those functions according to your input data structure and desired
+   t-test output, if you need preprocessing of your data or you're running
+   `run_twosample_ttest.py` script.
 
 
 ### `twosample_ttest.py`
