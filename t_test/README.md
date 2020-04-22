@@ -172,7 +172,7 @@ the absolute value of the t-value increases.
 
 ### t-distribution
 
-t-distribution (also called Student's t-distribution) is a type of probability
+T-distribution (also called Student's t-distribution) is a type of probability
 distributions that arises when estimating the mean of a normally distributed
 population in situations where the sample size is small and the population
 standard deviation is unknown.
