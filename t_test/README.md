@@ -44,7 +44,7 @@ during a hypothesis test.
 The procedure that calculates the test statistic compares your data to what is
 expected under the [null hypothesis](#null-hypothesis).
 
-t-values are not in the units of the original data, but unitless.
+T-values are not in the units of the original data, but unitless.
 To be able to interpret individual t-values, you need to place them in a larger
 context.
 [t-distributions](#t-distribution) provide this broader context so you can
