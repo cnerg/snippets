@@ -201,7 +201,7 @@ A one-tailed test can only assess one of those directions.
 A z-test is used when comparing sample mean with large sample size to
 population mean where population variance is known.
 
-t-test is used to compare sample means with small sample size (< 30)
+A t-test is used to compare sample means with small sample size (< 30)
 when population variance is unknown.
 
 
