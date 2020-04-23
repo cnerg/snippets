@@ -62,6 +62,7 @@ from scipy import stats
 DEFAULT_a = 0.05  # Default significance level.
 DEFAULT_d = 0  # Default discrepancy between two means.
 DEFAULT_v = 1  # Default verbosity level.
+DEFAULT_s = False  # Default boolean to skip mismatching keywords.
 DEFAULT_plot_name = "plot_twosample-ttest.png"  # Default plot filename.
 CHOICES_plot_type = ('histogram', 'heatmap')  # Plot style choices.
 
@@ -160,7 +161,7 @@ def process_2dplot_input(stat):
     return (x, y, v, tt, xl, yl)
 
 
-def print_rej_summary(stat, alpha, d, verbose):
+def print_rej_summary(stat, alpha, d, verbose=DEFAULT_v):
     """Print summary of null hypothesis rejection results.
 
     This function counts rejections of null hypothesis and prints the summary.
@@ -169,11 +170,12 @@ def print_rej_summary(stat, alpha, d, verbose):
         stat (dict): Dictionary of {key, [t-vaue, degree of freedom, p-value,
             critical t-value, rejection boolean]} pair.
         alpha (float): Significance level.
-        d (float): Set discrepancy between two input data, if any.
+        d (float): Set discrepancy between two input data.
         verbose (int): Integer indicating verbosity level of t-test result.
             0: No summary displayed.
             1: Display simple summary with rejection counts.
             2: Display all rejected cases.
+            Default = 1
 
     Returns:
         None.
@@ -289,7 +291,7 @@ def check_input_args(sample_1, sample_2, alpha, d, skip):
         sample_2 (dict): Dictionary of {key: [Sample mean, Estimated standard
             error of the mean, sample size]} pair.
         alpha (float): Significance level.
-        d (float): Set discrepancy between two input data, if any.
+        d (float): Set discrepancy between two input data.
         skip (bool): Boolean to skip mismatching keywords.
 
     Returns:
@@ -375,7 +377,7 @@ def calc_twosample_tvalue(m1, sd1, n1, m2, sd2, n2, d):
         m2 (float): Mean of sample 2.
         sd2 (float): Standard deviation of sample 2.
         n2 (float): Size of sample 2.
-        d (float): Set discrepancy between two input data, if any.
+        d (float): Set discrepancy between two input data.
 
     Returns:
         t_val (float): Calculated t-value.
@@ -386,7 +388,7 @@ def calc_twosample_tvalue(m1, sd1, n1, m2, sd2, n2, d):
     return round(t_val, NDIGITS)
 
 
-def t_test(sample_1, sample_2, alpha, d, skip):
+def t_test(sample_1, sample_2, alpha=DEFAULT_a, d=DEFAULT_d, skip=DEFAULT_s):
     """Perform t-test.
 
     This is the main function to call sub-functions for performing t-test.
@@ -397,8 +399,11 @@ def t_test(sample_1, sample_2, alpha, d, skip):
         sample_2 (dict): Dictionary of {key: [Sample mean, Estimated standard
             error of the mean, sample size]} pair.
         alpha (float): Significance level.
+            Default = 0.05
         d (float): Set discrepancy between two input data, if any.
+            Default = 0
         skip (bool): Boolean to skip mismatching keywords.
+            Default = False
 
     Returns:
         stat (dict): Dictionary of {key, [t-vaue, degree of freedom, p-value,
