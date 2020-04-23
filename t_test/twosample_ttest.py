@@ -61,6 +61,7 @@ from scipy import stats
 
 DEFAULT_a = 0.05  # Default significance level.
 DEFAULT_d = 0  # Default discrepancy between two means.
+DEFAULT_n = 30  # Default sample size, if not specified.
 DEFAULT_v = 1  # Default verbosity level.
 DEFAULT_s = False  # Default boolean to skip mismatching keywords.
 DEFAULT_plot_name = "plot_twosample-ttest.png"  # Default plot filename.
@@ -100,7 +101,7 @@ def load_data(filename):
     return data
 
 
-def process_data(rdata, default_n=1000):
+def process_data(rdata, default_n=DEFAULT_n):
     """Process data for t-value calculation.
 
     This function performs pre-processing of given raw data
@@ -110,7 +111,7 @@ def process_data(rdata, default_n=1000):
     Arguments:
         rdata (dict): Dictionary of raw data.
         default_n (int): Default sample size if not specified.
-            Default = 1000
+            Default = 30
 
     Returns:
         pdata (dict): Dictionary of processed data in the form of
