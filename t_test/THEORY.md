@@ -253,11 +253,11 @@ replicate studies.
 [[12]](https://www.statisticshowto.com/what-is-an-alpha-level/),
 [[13]](https://www.datasciencecentral.com/profiles/blogs/significance-level-vs-confidence-level-vs-confidence-interval)
 
-- Critical values
+- Critical values:
 [[14]](https://machinelearningmastery.com/critical-values-for-statistical-hypothesis-testing/),
 [[15]](https://www.itl.nist.gov/div898/handbook/eda/section3/eda3672.htm)
 
-- p-values
+- p-values:
 [[16]](https://www.itl.nist.gov/div898/handbook/prc/section1/prc131.htm),
 [[17]](https://www.statsdirect.com/help/basics/p_values.htm),
 [[18]](https://en.wikipedia.org/wiki/P-value)
