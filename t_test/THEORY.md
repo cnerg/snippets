@@ -228,45 +228,45 @@ replicate studies.
 
 - Overview:
 [[1]](https://blog.minitab.com/blog/adventures-in-statistics-2/understanding-t-tests-t-values-and-t-distributions),
-[[4]](https://statisticsbyjim.com/hypothesis-testing/t-tests-t-values-t-distributions-probabilities/),
-[[16]](https://en.wikipedia.org/wiki/Student%27s_t-test)
+[[2]](https://statisticsbyjim.com/hypothesis-testing/t-tests-t-values-t-distributions-probabilities/),
+[[3]](https://en.wikipedia.org/wiki/Student%27s_t-test)
 
 - Types of t-test:
-[[2]](https://blog.minitab.com/blog/adventures-in-statistics-2/understanding-t-tests-1-sample-2-sample-and-paired-t-tests)
+[[4]](https://blog.minitab.com/blog/adventures-in-statistics-2/understanding-t-tests-1-sample-2-sample-and-paired-t-tests)
 
 - Two-sample t-test:
-[[8]](https://www.itl.nist.gov/div898/handbook/eda/section3/eda353.htm)
+[[5]](https://www.itl.nist.gov/div898/handbook/eda/section3/eda353.htm)
 
 - Python examples:
-[[5]](https://towardsdatascience.com/inferential-statistics-series-t-test-using-numpy-2718f8f9bf2f),
-[[6]](https://machinelearningmastery.com/how-to-code-the-students-t-test-from-scratch-in-python/)
+[[6]](https://towardsdatascience.com/inferential-statistics-series-t-test-using-numpy-2718f8f9bf2f),
+[[7]](https://machinelearningmastery.com/how-to-code-the-students-t-test-from-scratch-in-python/)
 
 - Test statistic:
-[[18]](https://en.wikipedia.org/wiki/Test_statistic),
-[[17]](https://en.wikipedia.org/wiki/T-statistic)
+[[8]](https://en.wikipedia.org/wiki/Test_statistic),
+[[9]](https://en.wikipedia.org/wiki/T-statistic)
 
 - T-distribution:
-[[19]](https://en.wikipedia.org/wiki/Student%27s_t-distribution)
+[[10]](https://en.wikipedia.org/wiki/Student%27s_t-distribution)
 
-- Significance levels
-- [[3]](https://blog.minitab.com/blog/adventures-in-statistics-2/understanding-hypothesis-tests-significance-levels-alpha-and-p-values-in-statistics)
-- [[12]](https://www.statisticshowto.com/what-is-an-alpha-level/)
-- [[13]](https://www.datasciencecentral.com/profiles/blogs/significance-level-vs-confidence-level-vs-confidence-interval)
+- Significance levels:
+[[11]](https://blog.minitab.com/blog/adventures-in-statistics-2/understanding-hypothesis-tests-significance-levels-alpha-and-p-values-in-statistics),
+[[12]](https://www.statisticshowto.com/what-is-an-alpha-level/),
+[[13]](https://www.datasciencecentral.com/profiles/blogs/significance-level-vs-confidence-level-vs-confidence-interval)
 
 - Critical values
-[[7]](https://machinelearningmastery.com/critical-values-for-statistical-hypothesis-testing/),
-[[9]](https://www.itl.nist.gov/div898/handbook/eda/section3/eda3672.htm)
+[[14]](https://machinelearningmastery.com/critical-values-for-statistical-hypothesis-testing/),
+[[15]](https://www.itl.nist.gov/div898/handbook/eda/section3/eda3672.htm)
 
 - p-values
-[[10]](https://www.itl.nist.gov/div898/handbook/prc/section1/prc131.htm),
-[[14]](https://www.statsdirect.com/help/basics/p_values.htm),
-[[21]](https://en.wikipedia.org/wiki/P-value)
+[[16]](https://www.itl.nist.gov/div898/handbook/prc/section1/prc131.htm),
+[[17]](https://www.statsdirect.com/help/basics/p_values.htm),
+[[18]](https://en.wikipedia.org/wiki/P-value)
 
 - z-test vs. t-test:
-[[15]](https://study.com/academy/lesson/z-test-t-test-similarities-differences.html)
+[[19]](https://study.com/academy/lesson/z-test-t-test-similarities-differences.html)
 
 - Null hypothesis:
 [[20]](https://en.wikipedia.org/wiki/Null_hypothesis)
 
 - Standard error of the mean:
-[[22]](https://en.wikipedia.org/wiki/Standard_error#Standard_error_of_the_mean)
+[[21]](https://en.wikipedia.org/wiki/Standard_error#Standard_error_of_the_mean)
