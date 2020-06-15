@@ -9,4 +9,5 @@ methods used to plot the surface:
 1. tricontourf
 2. tripcolor with flat shading
 3. tripcolor with Gourard shading
+
 Note that the color bar is only smoothed with tripcolor.
