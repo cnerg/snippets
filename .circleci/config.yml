@@ -10,25 +10,21 @@ executors:
             #PYTHONPATH: ~/project/
             
 jobs:
-    python2_inputs:
-        executor:
-            name: snippets
-        steps:
-            - checkout
-            - run: pwd
-            - run: 
-                name: List Files
-                command: ls
-    piper_job:
-        executor:
-            name: snippets
-        steps:
-            - run: ls -a
+    # Template.
+    # test_script_x:
+    #     executor:
+    #         name: snippets
+    #     steps:
+    #         - checkout
+    #         - run: 
+    #             name: Test script X.
+    #             command: 
                 
 workflows:
-    build_and_test:
-        jobs:
-            - python2_inputs
-            - piper_job:
-                requires:
-                    - python2_inputs
+    # Template.
+    # test_scripts:
+    #     jobs:
+    #         - test_script_x
+    #         - test_script_y:
+    #             requires:
+    #                 - test_script_x
