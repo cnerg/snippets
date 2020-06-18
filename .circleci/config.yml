@@ -14,24 +14,22 @@ jobs:
         steps:
             - checkout
             - run: ls -la
-    # Template.
+    ### Template. ###
     # test_script_x:
     #     executor:
     #         name: snippets
     #     steps:
     #         - checkout
     #         - run: 
-    #             name: Test script X.
-    #             command: 
-                
+    #               name: Test script X.
+    #               command: |
+    #                   echo "This is a template job."
+
 workflows:
     test:
         jobs:
             - init
-    # Template.
-    # test_scripts:
-    #     jobs:
+    ### Template. ###
     #         - test_script_x
-    #         - test_script_y:
     #             requires:
-    #                 - test_script_x
+    #                 - init
