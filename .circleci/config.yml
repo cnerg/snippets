@@ -13,7 +13,7 @@ jobs:
             name: snippets
         steps:
             - checkout
-            - run: 
+            - run: ls -la
     # Template.
     # test_script_x:
     #     executor:
