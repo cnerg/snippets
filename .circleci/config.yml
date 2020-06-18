@@ -5,7 +5,7 @@ version: 2.1
 executors:
     snippets:
         docker:
-            - image: pyne/pyne_ubuntu_16.04
+            - image: cnerg/snippets
         environment:
             #PYTHONPATH: ~/project/
             
