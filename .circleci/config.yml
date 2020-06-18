@@ -7,6 +7,13 @@ executors:
             - image: cnerg/snippets
             
 jobs:
+    # CI initializing job.
+    init:
+        executor:
+            name: snippets
+        steps:
+            - checkout
+            - run: 
     # Template.
     # test_script_x:
     #     executor:
@@ -18,6 +25,9 @@ jobs:
     #             command: 
                 
 workflows:
+    test:
+        jobs:
+            - init
     # Template.
     # test_scripts:
     #     jobs:
