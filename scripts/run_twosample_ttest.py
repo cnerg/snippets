@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 """Run two-sample t-tests on samples from two files.
 
 Author: YoungHui Park
