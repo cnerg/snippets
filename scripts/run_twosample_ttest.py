@@ -4,7 +4,7 @@
 Author: YoungHui Park
 
 This is a wrapper script that runs 't_test' function from `twosample_ttest`
-module.
+module. Refer README.md in `t_test` directory for details.
 
 Usage:
 - `filenames`: Input data filenames. Must be two strings.
