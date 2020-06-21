@@ -17,7 +17,7 @@ Then it determines whether the null hypothesis is rejected or accepted by
 comparing p-value with significance level (or alternatively, t-value with
 critical value).
 Further, it calculates relative standard error for each sample to provide
-information on the quality of sample data.
+information on the reliability of sample data.
 Finally, it returns a dictionary with summaries of t-test in the form of
 {key: (t-value, degrees of freedom, p-value, critical value, reject/accept,
 relative standard errors)}.
