@@ -52,8 +52,8 @@ if __name__ == """__main__""":
                         help="Verbosity level of t-test result. " \
                         + "0: No summary displayed. " \
                         + "1: Display simple summary with rejection counts. " \
-                        + "2: Display all rejected cases. " \
-                        + "Default: {0}".format(DEFAULT_v))
+                        + "2: Display all rejected cases and relative standard " \
+                        + "errors. Default: {0}".format(DEFAULT_v))
 
     parser.add_argument("--plot", "-p", type=str, nargs=2,
                         metavar=("plot_type", "plot_filename"),

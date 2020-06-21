@@ -224,6 +224,19 @@ Determining which case is more likely requires subject area knowledge and
 replicate studies.
 
 
+# Relative Standard Error (RSE)
+
+It might be not enough to only examine rejection/acceptance of null hypothesis
+using t-test when determining statistical significance of the difference.
+Null hypothesis can be rejected for a set of samples with small difference due
+to even smaller standard errors, while it can be accepted for a set of samples
+with large difference if they have large standard errors.
+Intrinsically, a set of samples with larger standard errors tends to have
+a smaller t-value, more likely resulting in acceptance of null hypothesis.
+
+Hence, 
+
+
 ## References
 
 - Overview:
@@ -270,3 +283,6 @@ replicate studies.
 
 - Standard error of the mean:
 [[21]](https://en.wikipedia.org/wiki/Standard_error#Standard_error_of_the_mean)
+
+- Relative standard error:
+[[22]](https://www.investopedia.com/ask/answers/040915/what-relative-standard-error.asp)
