@@ -39,6 +39,7 @@ Following functions are included in this module:
   - load_data
   - process_data
   - process_2dplot_input
+  - calc_rse
   - print_rej_summary
   - plot_p_hist
   - plot_p_2d
@@ -138,7 +139,7 @@ def process_2dplot_input(stat):
 
     Arguments:
         stat (dict): Dictionary of {key, [t-vaue, degree of freedom, p-value,
-            critical t-value, rejection boolean]} pair.
+            critical t-value, rejection boolean, RSEs]} pair.
 
     Returns:
         x (list): List of x-coordinates for scatter plot.
@@ -169,13 +170,13 @@ def print_rej_summary(stat, alpha, d, verbose=DEFAULT_v):
 
     Arguments:
         stat (dict): Dictionary of {key, [t-vaue, degree of freedom, p-value,
-            critical t-value, rejection boolean]} pair.
+            critical t-value, rejection boolean, RSEs]} pair.
         alpha (float): Significance level.
         d (float): Set discrepancy between two input data.
         verbose (int): Integer indicating verbosity level of t-test result.
             0: No summary displayed.
             1: Display simple summary with rejection counts.
-            2: Display all rejected cases.
+            2: Display all rejected cases and relative standard errors.
             Default = 1
 
     Returns:
@@ -186,9 +187,16 @@ def print_rej_summary(stat, alpha, d, verbose=DEFAULT_v):
     r_str = "- test result: {0} out of {1} cases reject null hypothesis (mean_1\
  - mean_2) = {2} with alpha = {3}".format(len(rejected), len(stat), d, alpha)
     if verbose > 1:
+        # Rejected cases.
         r_str += "\n  Rejected cases:"
         for key in rejected:
             r_str += "\n  '{0}' with p-value {1:.5e}".format(key, stat[key][2])
+        # Relative standard errors.
+        r_str += "\n  Relative standard errors:"
+        for key, val in stat.items():
+            [rse1, rse2] = val[-1]
+            r_str += "\n  '{0}' - sample_1: {1:.3f} %, sample_2: {2:.3f} %".\
+                format(key, rse1, rse2)
     print(r_str)
 
 
@@ -199,7 +207,7 @@ def plot_p_hist(stat, alpha, plot_fname):
 
     Arguments:
         stat (dict): Dictionary of {key, [t-vaue, degree of freedom, p-value,
-            critical t-value, rejection boolean]} pair.
+            critical t-value, rejection boolean, RSEs]} pair.
         alpha (float): Significance level.
         plot_fname (str): Filename for the output histogram.
 
@@ -365,6 +373,24 @@ def check_data_matching(set_1, set_2, skip):
     return common_set
 
 
+def calc_rse(m, sem):
+    """Calculate relative standard error (RSE).
+
+    This function calculates relative standard error using
+    given mean and standard error of the mean.
+
+    Arguments:
+        m (float): Mean of a sample.
+        sem (float): Standard error of the mean.
+
+    Returns:
+        rse (float): Relative standard error of the mean.
+
+    """
+    rse = round(sem / m * 100, NDIGITS - 2)  # Unit: %
+    return rse
+
+
 def calc_twosample_tvalue(m1, sd1, n1, m2, sd2, n2, d):
     """Calculate two-sample t-value.
 
@@ -408,7 +434,7 @@ def t_test(sample_1, sample_2, alpha=DEFAULT_a, d=DEFAULT_d, skip=DEFAULT_s):
 
     Returns:
         stat (dict): Dictionary of {key, [t-vaue, degree of freedom, p-value,
-            critical t-value, rejection boolean]} pair.
+            critical t-value, rejection boolean, RSEs]} pair.
 
     """
     print("- Running two-sample t-test.")
@@ -420,6 +446,8 @@ def t_test(sample_1, sample_2, alpha=DEFAULT_a, d=DEFAULT_d, skip=DEFAULT_s):
     for key in key_set:
         [m1, sem1, n1] = sample_1[key]
         [m2, sem2, n2] = sample_2[key]
+        rse1 = calc_rse(m1, sem1)
+        rse2 = calc_rse(m2, sem2)
 
         # Convert estimated standard error of the mean (type of data typically
         # provided by Monte Carlo codes such as MCNP as uncertainty of
@@ -439,6 +467,6 @@ def t_test(sample_1, sample_2, alpha=DEFAULT_a, d=DEFAULT_d, skip=DEFAULT_s):
         else:
             reject = True
 
-        stat[key] = (t_val, df, p_val, t_crit, reject)
+        stat[key] = (t_val, df, p_val, t_crit, reject, [rse1, rse2])
 
     return stat
