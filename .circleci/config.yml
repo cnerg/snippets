@@ -1,0 +1,35 @@
+version: 2.1
+
+# Executors define environment where jobs will be run.
+executors:
+    snippets:
+        docker:
+            - image: cnerg/snippets
+            
+jobs:
+    # CI initializing job.
+    init:
+        executor:
+            name: snippets
+        steps:
+            - checkout
+            - run: ls -la
+    ### Template. ###
+    # test_script_x:
+    #     executor:
+    #         name: snippets
+    #     steps:
+    #         - checkout
+    #         - run: 
+    #               name: Test script X.
+    #               command: |
+    #                   echo "This is a template job."
+
+workflows:
+    test:
+        jobs:
+            - init
+    ### Template. ###
+    #         - test_script_x
+    #             requires:
+    #                 - init
