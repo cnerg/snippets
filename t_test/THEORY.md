@@ -13,6 +13,7 @@ This document provides brief background theory of t-test.
   - [Two-tailed vs. One-tailed test](#two-tailed-vs-one-tailed-test)
 - [Difference with z-test?](#difference-with-z-test)
 - [How to interpret t-test result?](#how-to-interpret-t-test-result)
+- [Relative standard error](#relative-standard-error)
 - [References](#references)
 
 
@@ -103,6 +104,7 @@ for the entire population.
    null hypothesis.
 
    * p-value
+
      p-value is the probability of obtaining an effect at least as extreme as
      the one in your sample data, assuming the truth of the null hypothesis.
      p-value can be obtained using the t-value and cumulative distribution
@@ -115,6 +117,7 @@ for the entire population.
        hypothesis.
 
    * t<sub>crit</sub>
+
      t<sub>crit</sub>, or critical value for the t-distribution, is used as a
      threshold for interpreting the result of a statistical test.
      The observation values in the population beyond the critical value are
@@ -224,7 +227,7 @@ Determining which case is more likely requires subject area knowledge and
 replicate studies.
 
 
-# Relative Standard Error (RSE)
+## Relative standard error
 
 Note that it might be not enough to only examine rejection/acceptance of null
 hypothesis using t-test when determining how close two distributions are to each
@@ -242,7 +245,7 @@ It is a measure of how large the standard error is relative to the sample mean.
 The smaller relative standard error is, the more significant the sample is
 (in other words, the sample mean is more likely close to the population mean).
 
-Relative Standard Error [%] = (Standard Error of the Mean)/(Sample Mean) $$\times$$ 100
+Relative Standard Error [%] = (Standard Error of the Mean)/(Sample Mean) X 100
 
 
 ## References
