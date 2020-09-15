@@ -245,7 +245,7 @@ It is a measure of how large the standard error is relative to the sample mean.
 The smaller relative standard error is, the more significant the sample is
 (in other words, the sample mean is more likely close to the population mean).
 
-Relative Standard Error [%] = (Standard Error of the Mean)/(Sample Mean) X 100
+Relative Standard Error [%] = (Standard Error of the Mean) / (Sample Mean) X 100
 
 
 ## References
