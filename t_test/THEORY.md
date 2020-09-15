@@ -226,15 +226,23 @@ replicate studies.
 
 # Relative Standard Error (RSE)
 
-It might be not enough to only examine rejection/acceptance of null hypothesis
-using t-test when determining statistical significance of the difference.
+Note that it might be not enough to only examine rejection/acceptance of null
+hypothesis using t-test when determining how close two distributions are to each
+other.
 Null hypothesis can be rejected for a set of samples with small difference due
 to even smaller standard errors, while it can be accepted for a set of samples
 with large difference if they have large standard errors.
-Intrinsically, a set of samples with larger standard errors tends to have
-a smaller t-value, more likely resulting in acceptance of null hypothesis.
+Intrinsically, with the same mean values, a set of samples with larger standard
+errors has a smaller t-value than that with smaller standard errors, more likely
+resulting in acceptance of null hypothesis.
 
-Hence, 
+To aid the statistical analysis of how close two distributions are to each
+other, the relative standard error (RSE) of each sample can be examined.
+It is a measure of how large the standard error is relative to the sample mean.
+The smaller relative standard error is, the more significant the sample is
+(in other words, the sample mean is more likely close to the population mean).
+
+Relative Standard Error [%] = (Standard Error of the Mean)/(Sample Mean) $$\times$$ 100
 
 
 ## References
