@@ -11,6 +11,8 @@ The following classes/methods are included in this module:
   * test_mismatch_skip
 - TestCaclTwosampleTvalue
   * test_t_result
+- TestCalcRse
+  * test_rse_result
 - TestTTest
   * test_stat_result
 
@@ -72,6 +74,22 @@ class TestCheckDataMatching(object):
         """Test if mismatching sets are properly skipped."""
         obs_set = tt.check_data_matching(set_1, set_2, True)
         assert obs_set == exp_set
+
+
+class TestCalcRse(object):
+    """Test calc_rse function."""
+
+    @pytest.mark.parametrize("m, sem, exp_rse", [
+        # m, sem, exp_rse
+        (1, 0.2, 20.0),
+        (12.5, 1, 8.0),
+        (100, 4, 4.0),
+        (652.3, 72.8, 11.161)
+    ])
+    def test_rse_result(self, m, sem, exp_rse):
+        """Test if the function properly calculates RSE."""
+        obs_rse = tt.calc_rse(m, sem)
+        assert obs_rse == pytest.approx(exp_rse, abs=TOL)
 
 
 class TestCalcTwosampleTvalue(object):
