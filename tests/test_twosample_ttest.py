@@ -9,7 +9,7 @@ The following classes/methods are included in this module:
 - TestCheckDataMatching
   * test_mismatch_err
   * test_mismatch_skip
-- TestCaclTwosampleTvalue
+- TestCalcTwosampleTvalue
   * test_t_result
 - TestCalcRse
   * test_rse_result
@@ -68,7 +68,7 @@ class TestCheckDataMatching(object):
         ({1, 2, 3}, {1, 2, 3, 4}, {1, 2, 3}),
         ({5, 6}, {5}, {5}),
         ({'a', 'b', 'c'}, {'a', 'd', 'e'}, {'a'}),
-        ({2, 4, 6, 8}, {1, 3, 5, 7}, set()),
+        ({2, 4, 6, 8}, {1, 3, 5, 7}, set())
     ])
     def test_mismatch_skip(self, set_1, set_2, exp_set):
         """Test if mismatching sets are properly skipped."""
@@ -99,7 +99,7 @@ class TestCalcTwosampleTvalue(object):
         # m1, se1, m2, se2, d, exp_t
         (1.1, 0.05, 3, 1.2, 0.04, 4, 0, -2.95742),
         (305, 1.2, 25, 298, 3.2, 25, 6.5, 0.73151),
-        (0.08411, 0.00001, 15, 0.08327, 0.00002, 17, 0.0005, 59.52335),
+        (0.08411, 0.00001, 15, 0.08327, 0.00002, 17, 0.0005, 59.52335)
     ])
     def test_t_result(self, m1, sd1, n1, m2, sd2, n2, d, exp_t):
         """Test if the function properly calculates t-statistic."""
