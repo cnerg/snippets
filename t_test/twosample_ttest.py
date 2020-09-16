@@ -208,7 +208,7 @@ def print_rej_summary(stat, alpha, d, verbose=DEFAULT_v):
     print(r_str)
 
 
-def plot_p_hist(stat, alpha, plot_fname):
+def plot_p_hist(stat, alpha, plot_fname, fig_scale=1.0):
     """Plot histogram of calculated p-values.
 
     This function generates a historgam of p-values for further analysis.
@@ -218,23 +218,32 @@ def plot_p_hist(stat, alpha, plot_fname):
             critical t-value, rejection boolean, RSEs]} pair.
         alpha (float): Significance level.
         plot_fname (str): Filename for the output histogram.
+        fig_scale (float): Scale of output figure relative to default setting.
+            Default = 1.0
 
     Returns:
         None.
 
     """
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=DEFAULT_figsize*fig_scale)
 
     p_vals = [val[2] for key, val in stat.items()]
     nb = int(1.0/alpha)
-    plt.hist(p_vals, bins=nb, range=[0.0, 1.0], ec='black')
-    ax.axvline(x=alpha, color='red', linestyle="--")
+    plt.hist(p_vals, bins=nb, range=[0.0, 1.0], ec='black',
+             linewidth=1.0*fig_scale)
+    ax.axvline(x=alpha, color='red', linestyle="--",
+               linewidth=1.5*fig_scale)
 
-    ax.grid(axis='y', alpha=0.5)
-    ax.set_title("p-value Histogram (p <= {0}: Reject null)".format(alpha))
-    ax.set_xlabel("p-value [-]")
+    ax.grid(axis='y', alpha=0.5, linewidth=0.75*fig_scale)
     ax.set_xticks(np.arange(0.0, 1.0, step=alpha), minor=True)
-    ax.set_ylabel("Counts [#]")
+    ax.tick_params(axis='x', labelsize=DEFAULT_fontsize*fig_scale)
+    ax.tick_params(axis='y', labelsize=DEFAULT_fontsize*fig_scale)
+
+    ax.set_title("p-value Histogram (p <= {0}: Reject null)".format(alpha),
+                 fontsize=DEFAULT_fontsize_title*fig_scale)
+    ax.set_xlabel("p-value [-]", fontsize=DEFAULT_fontsize*fig_scale)
+    ax.set_ylabel("Counts [#]", fontsize=DEFAULT_fontsize*fig_scale)
+
     plt.savefig(plot_fname)
 
 
