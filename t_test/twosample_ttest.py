@@ -73,6 +73,11 @@ CHOICES_plot_type = ('histogram', 'heatmap')  # Plot style choices.
 
 NDIGITS = 5  # Default precision after the decimal point.
 
+DEFAULT_figsize = np.array((6.4, 4.8))
+DEFAULT_fontsize_title = 12
+DEFAULT_fontsize = 10
+DEFAULT_markersize = 36
+DEFAULT_cticknum = 6
 
 # ---- Customizable data loading/processing and plotting functions ---- #
 
@@ -233,7 +238,8 @@ def plot_p_hist(stat, alpha, plot_fname):
     plt.savefig(plot_fname)
 
 
-def plot_p_2d(x, y, v, tt, xl, yl, alpha, plot_fname, reject_only=True):
+def plot_p_2d(x, y, v, tt, xl, yl, alpha, plot_fname, reject_only=True,
+              fig_scale=1.6):
     """Plot calculated p-values in 2D heatmap.
 
     This function generates a 2D heatmap of p-values.
@@ -254,12 +260,14 @@ def plot_p_2d(x, y, v, tt, xl, yl, alpha, plot_fname, reject_only=True):
             (Note that this can lead to significantly different color scales
             between rejected cases and accepted cases.).
             Default = True
+        fig_scale (float): Scale of output figure relative to default setting.
+            Default = 1.6
 
     Returns:
         None.
 
     """
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=DEFAULT_figsize*fig_scale)
     x = np.array(x)
     y = np.array(y)
     v = np.array(v)
@@ -271,21 +279,30 @@ def plot_p_2d(x, y, v, tt, xl, yl, alpha, plot_fname, reject_only=True):
         xr = x[v<=alpha]
         yr = y[v<=alpha]
         vr = v[v<=alpha]
-        ax.scatter(xp, yp, c='k', marker='1', label='Pass')
-        ax.legend(loc=(1.0, 1.0))
+        ax.scatter(xp, yp, marker='1', label='Pass',
+                   c='k', linewidth=1.5*fig_scale,
+                   s=DEFAULT_markersize*fig_scale**2)
+        ax.legend(loc=(1.0, 1.02), fontsize=DEFAULT_fontsize*fig_scale)
         im = ax.scatter(xr, yr, c=vr, cmap='viridis', marker="s",
-                        vmin=0, vmax=alpha)
-        cticks = np.linspace(0, alpha, 6)
+                        vmin=0, vmax=alpha, s=DEFAULT_markersize*fig_scale**2)
+        cticks = np.linspace(0, alpha, DEFAULT_cticknum)
     else:
         divnorm = colors.TwoSlopeNorm(vcenter=alpha)
         im = ax.scatter(x, y, c=v, cmap='seismic_r', norm=divnorm, marker='s',
-                        edgecolors='k', linewidth=0.2)
+                        edgecolors='k', linewidth=0.4,
+                        s=DEFAULT_markersize*fig_scale**2)
         cticks = sorted(np.append(np.linspace(0, 1, 11), alpha))
 
-    ax.set_title(tt)
-    ax.set_xlabel(xl)
-    ax.set_ylabel(yl)
-    fig.colorbar(im, ax=ax, ticks=cticks)
+    cb = fig.colorbar(im, ax=ax, ticks=cticks)
+    cb.set_label(label='p-value [-]', fontsize=DEFAULT_fontsize*fig_scale)
+    cb.ax.tick_params(labelsize=DEFAULT_fontsize*fig_scale)
+
+    ax.tick_params(axis='x', labelsize=DEFAULT_fontsize*fig_scale)
+    ax.tick_params(axis='y', labelsize=DEFAULT_fontsize*fig_scale)
+
+    ax.set_title(tt, fontsize=DEFAULT_fontsize_title*fig_scale)
+    ax.set_xlabel(xl, fontsize=DEFAULT_fontsize*fig_scale)
+    ax.set_ylabel(yl, fontsize=DEFAULT_fontsize*fig_scale)
 
     plt.savefig(plot_fname)
 
