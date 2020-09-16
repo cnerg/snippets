@@ -289,6 +289,7 @@ def plot_p_2d(x, y, v, tt, xl, yl, alpha, plot_fname, reject_only=True,
     v = np.array(v)
 
     if reject_only:
+        # Rejection-focused mode.
         # Simply mark as 'Pass' for accepting cases,
         # but detail the range of p-values for rejecting cases.
 
@@ -311,6 +312,7 @@ def plot_p_2d(x, y, v, tt, xl, yl, alpha, plot_fname, reject_only=True,
                         vmin=0, vmax=alpha, s=DEFAULT_markersize*fig_scale**2)
         cticks = np.linspace(0, alpha, DEFAULT_cticknum)
     else:
+        # Acceptance-focused mode.
         # Detail the full range of p-values for both rejecting and accepting
         # cases, possibly losing much information on rejecting cases.
 

@@ -112,5 +112,5 @@ $ pytest tests/test_twosample_ttest.py -vvv
 ## Example output plots
 
 ![histogram](example/ex-histogram_uwnr-flux-comp.png)
-![heatmap-rej-true](example/ex-heatmap_uwnr-flux-comp.png)
-![heatmap-rej-false](example/ex-heatmap_uwnr-flux-comp_reject-only-false.png)
+![heatmap-rej-focused](example/ex-heatmap_uwnr-flux-comp_rej-focused.png)
+![heatmap-acc-focused](example/ex-heatmap_uwnr-flux-comp_acc-focused.png)
