@@ -66,7 +66,7 @@ Usage:
   - `skip`: Boolean to skip mismatching keywords.
 - Output:
   - `stat`: Dictionary of {key, [t-vaue, degree of freedom, p-value,
-    critical t-value, rejection boolean]} pair.
+    critical t-value, rejection boolean, RSEs]} pair.
 - Example:
 ```python
 from t_test import twosample_ttest as tt
@@ -94,8 +94,8 @@ $ python3 t_test.py file1 file2 -a 0.01 -d 0.04 -s -v 2 -p histogram fig_h.png
 → Calculate t-statistic with significance level of 0.01 (or 1 %)
 for each pair of data in `file1` and `file2` that are set to have discrepancy
 of 0.04. Skip any mismatching data points. Display the number of pairs that
-reject null hypothesis along with details of all rejected cases, and save a
-histogram of p-values in `fig_h.png`.
+reject null hypothesis along with details of all rejected cases and relative
+standard error of each case, and save a histogram of p-values in `fig_h.png`.
 
 
 ### `test_twosample_ttest.py`
