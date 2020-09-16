@@ -228,17 +228,24 @@ def plot_p_hist(stat, alpha, plot_fname, fig_scale=1.0):
     fig, ax = plt.subplots(figsize=DEFAULT_figsize*fig_scale)
 
     p_vals = [val[2] for key, val in stat.items()]
+    # Set the number of bins according to the alpha value,
+    # so that all rejecting cases fall into a single bin,
+    # giving the total number of rejecting case at once.
     nb = int(1.0/alpha)
     plt.hist(p_vals, bins=nb, range=[0.0, 1.0], ec='black',
              linewidth=1.0*fig_scale)
+
+    # Draw a vertical line at the boundary of rejection/acceptance.
     ax.axvline(x=alpha, color='red', linestyle="--",
                linewidth=1.5*fig_scale)
 
+    # Grid and tick settings.
     ax.grid(axis='y', alpha=0.5, linewidth=0.75*fig_scale)
     ax.set_xticks(np.arange(0.0, 1.0, step=alpha), minor=True)
     ax.tick_params(axis='x', labelsize=DEFAULT_fontsize*fig_scale)
     ax.tick_params(axis='y', labelsize=DEFAULT_fontsize*fig_scale)
 
+    # Label settings.
     ax.set_title("p-value Histogram (p <= {0}: Reject null)".format(alpha),
                  fontsize=DEFAULT_fontsize_title*fig_scale)
     ax.set_xlabel("p-value [-]", fontsize=DEFAULT_fontsize*fig_scale)
@@ -282,33 +289,48 @@ def plot_p_2d(x, y, v, tt, xl, yl, alpha, plot_fname, reject_only=True,
     v = np.array(v)
 
     if reject_only:
+        # Simply mark as 'Pass' for accepting cases,
+        # but detail the range of p-values for rejecting cases.
+
+        # Separate rejecting cases from accepting cases.
         xp = x[v>alpha]
         yp = y[v>alpha]
         vp = v[v>alpha]
         xr = x[v<=alpha]
         yr = y[v<=alpha]
         vr = v[v<=alpha]
+
+        # Use a single 'Y' marker for all accepting cases.
         ax.scatter(xp, yp, marker='1', label='Pass',
                    c='k', linewidth=1.5*fig_scale,
                    s=DEFAULT_markersize*fig_scale**2)
         ax.legend(loc=(1.0, 1.02), fontsize=DEFAULT_fontsize*fig_scale)
+
+        # Give colors according to their p-values for all rejecting case.
         im = ax.scatter(xr, yr, c=vr, cmap='viridis', marker="s",
                         vmin=0, vmax=alpha, s=DEFAULT_markersize*fig_scale**2)
         cticks = np.linspace(0, alpha, DEFAULT_cticknum)
     else:
+        # Detail the full range of p-values for both rejecting and accepting
+        # cases, possibly losing much information on rejecting cases.
+
+        # Use the alpha value as a diverging point.
         divnorm = colors.TwoSlopeNorm(vcenter=alpha)
         im = ax.scatter(x, y, c=v, cmap='seismic_r', norm=divnorm, marker='s',
                         edgecolors='k', linewidth=0.4,
                         s=DEFAULT_markersize*fig_scale**2)
         cticks = sorted(np.append(np.linspace(0, 1, 11), alpha))
 
+    # Color bar settings.
     cb = fig.colorbar(im, ax=ax, ticks=cticks)
     cb.set_label(label='p-value [-]', fontsize=DEFAULT_fontsize*fig_scale)
     cb.ax.tick_params(labelsize=DEFAULT_fontsize*fig_scale)
 
+    # Tick settings.
     ax.tick_params(axis='x', labelsize=DEFAULT_fontsize*fig_scale)
     ax.tick_params(axis='y', labelsize=DEFAULT_fontsize*fig_scale)
 
+    # Label settings.
     ax.set_title(tt, fontsize=DEFAULT_fontsize_title*fig_scale)
     ax.set_xlabel(xl, fontsize=DEFAULT_fontsize*fig_scale)
     ax.set_ylabel(yl, fontsize=DEFAULT_fontsize*fig_scale)
