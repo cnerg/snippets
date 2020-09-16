@@ -17,6 +17,15 @@ jobs:
         steps:
             - checkout
             - run: ls -la
+    test_t_test:
+        executor:
+            name: snippets
+        steps:
+            - checkout
+            - run:
+                  name: Test the t-test module.
+                  command: |
+                      pytest tests/test_twosample_ttest.py -vvv
     ### Template. ###
     # test_script_x:
     #     executor:
@@ -32,6 +41,8 @@ workflows:
     test:
         jobs:
             - init:
+                context: dockerhub
+            - test_t_test:
                 context: dockerhub
     ### Template. ###
     #         - test_script_x:
