@@ -28,7 +28,7 @@ jobs:
             - run:
                   name: Test the t-test module.
                   command: |
-                      pytest tests/test_twosample_ttest.py -vvv
+                      python3 -m pytest tests/test_twosample_ttest.py -vvv
     ### Template. ###
     # test_script_x:
     #     executor:
