@@ -5,7 +5,10 @@ executors:
     snippets:
         docker:
             - image: cnerg/snippets
-            
+              auth:
+                username: cnerg
+                password: $DOCKERHUB_PASSWORD
+
 jobs:
     # CI initializing job.
     init:
@@ -20,7 +23,7 @@ jobs:
     #         name: snippets
     #     steps:
     #         - checkout
-    #         - run: 
+    #         - run:
     #               name: Test script X.
     #               command: |
     #                   echo "This is a template job."
@@ -28,8 +31,10 @@ jobs:
 workflows:
     test:
         jobs:
-            - init
+            - init:
+                context: dockerhub-cnerg
     ### Template. ###
-    #         - test_script_x
+    #         - test_script_x:
+    #             context: dockerhub-cnerg
     #             requires:
     #                 - init
