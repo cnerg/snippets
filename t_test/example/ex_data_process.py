@@ -5,7 +5,7 @@ To reproduce the example output plots,
   `from t_test.example.ex_data_process import load_data, process_data, process_2dplot_input`
   after the line `from t_test.twosample_ttest import *`
   in `run_twosample_ttest.py` script in `scripts` directory.
-2. Run the following commands in the root directory of `snippet` repo:
+2. Run the following commands in the root directory of `snippets` repo:
   - $ python3 scripts/run_twosample_ttest.py \
       t_test/example/flux_full-core.imsht t_test/example/flux_50cm-cut-core.imsht \
       -v 2 -s -p histogram ex-histogram_uwnr-flux-comp.png
