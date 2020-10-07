@@ -47,6 +47,8 @@ workflows:
                 context: dockerhub
             - test_t_test:
                 context: dockerhub
+                requires:
+                    - init
     ### Template. ###
     #         - test_script_x:
     #             context: dockerhub
