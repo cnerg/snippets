@@ -6,8 +6,8 @@ executors:
         docker:
             - image: cnerg/snippets
               auth:
-                username: cnerg
-                password: $DOCKERHUB_PASSWORD
+                username: $DOCKERHUB_USER
+                password: $DOCKERHUB_PASS
 
 jobs:
     # CI initializing job.
@@ -32,9 +32,9 @@ workflows:
     test:
         jobs:
             - init:
-                context: dockerhub-cnerg
+                context: dockerhub
     ### Template. ###
     #         - test_script_x:
-    #             context: dockerhub-cnerg
+    #             context: dockerhub
     #             requires:
     #                 - init
