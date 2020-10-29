@@ -17,7 +17,7 @@ jobs:
         steps:
             - checkout
             - run: ls -la
-            - run: pip install -U coverage coveralls PyYAML
+            - run: pip3 install -U coverage coveralls PyYAML
             - run: coverage run --source=. -m pytest
             - run: coverage report
             - run: coverage html
