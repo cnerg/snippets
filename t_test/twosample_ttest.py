@@ -54,7 +54,7 @@ Following functions are included in this module:
 
 """
 
-# Third party libraries.
+# Third party imports.
 from matplotlib import colors
 import matplotlib.pyplot as plt
 import numpy as np
@@ -75,6 +75,7 @@ DEFAULT_fontsize_title = 12
 DEFAULT_fontsize = 10
 DEFAULT_markersize = 36
 DEFAULT_cticknum = 6
+
 
 # ---- Customizable data loading/processing and plotting functions ---- #
 

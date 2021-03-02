@@ -89,7 +89,8 @@ Usage:
   - `--plot`(`-p`): Plot type and filename.
 - Example:
 ```shell
-$ python3 t_test.py file1 file2 -a 0.01 -d 0.04 -s -v 2 -p histogram fig_h.png
+$ python3 run_twosample_ttest.py file1 file2 -a 0.01 -d 0.04 -s -v 2
+  -p histogram fig_h.png
 ```
 → Calculate t-statistic with significance level of 0.01 (or 1 %)
 for each pair of data in `file1` and `file2` that are set to have discrepancy

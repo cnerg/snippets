@@ -18,8 +18,10 @@ The following classes/methods are included in this module:
 
 """
 
+# Third party imports
 import pytest
 
+# Local module imports
 from t_test import twosample_ttest as tt
 
 TOL=1e-5  # Tolerance for approximate assertion.
