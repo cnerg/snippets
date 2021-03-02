@@ -54,9 +54,6 @@ Following functions are included in this module:
 
 """
 
-# Standard libraries.
-import math
-
 # Third party libraries.
 from matplotlib import colors
 import matplotlib.pyplot as plt
@@ -103,7 +100,7 @@ def load_data(filename):
     # - key: Reference keyword for two-sample t-value calculation
     # - val: List of parsed data.
     # Example:
-    # for line in lines[1:]:
+    # for line in lines[1:]:  # It is assumed the file read has a header line.
     #     token = line.split()
     #     data[token[0]] = [float(token[1]), float(token[2])]
 
@@ -192,8 +189,9 @@ def print_rej_summary(stat, alpha, d, verbose=DEFAULT_v):
 
     """
     rejected = [key for key, val in stat.items() if val[4]]
-    r_str = "- test result: {0} out of {1} cases reject null hypothesis (mean_1\
- - mean_2) = {2} with alpha = {3}".format(len(rejected), len(stat), d, alpha)
+    r_str = ("- test result: {0} out of {1} cases reject null hypothesis"
+             " (mean_1 - mean_2) = {2} with alpha = {3}").format(
+                 len(rejected), len(stat), d, alpha)
     if verbose > 1:
         # Rejected cases.
         r_str += "\n  Rejected cases:"
@@ -203,8 +201,8 @@ def print_rej_summary(stat, alpha, d, verbose=DEFAULT_v):
         r_str += "\n  Relative standard errors:"
         for key, val in stat.items():
             [rse1, rse2] = val[-1]
-            r_str += "\n  '{0}' - sample_1: {1:.3f} %, sample_2: {2:.3f} %".\
-                format(key, rse1, rse2)
+            r_str += "\n  '{0}' - sample_1: {1:.3f} %, sample_2: {2:.3f} %"\
+                .format(key, rse1, rse2)
     print(r_str)
 
 
@@ -367,11 +365,12 @@ def check_input_args(sample_1, sample_2, alpha, d, skip):
             raise TypeError("{0} must be a dictionary.".format(sn))
         for key, val in sample.items():
             if not isinstance(val, list) or len(val) != 3:
-                raise TypeError("{0}: Value of key '{1}' must be a list \
-with 3 elements. Check t_test docstring for valid input.".format(sn, key))
+                raise TypeError(("{0}: Value of key '{1}' must be a list"
+                                 " with 3 elements. Check t_test docstring"
+                                 " for valid input.").format(sn, key))
             if not all(isinstance(v, (float, int)) for v in val):
-                raise TypeError("{0}: Value of key '{1}' must be a list \
-of floats or ints.".format(sn, key))
+                raise TypeError(("{0}: Value of key '{1}' must be a list"
+                                 " of floats or ints.").format(sn, key))
 
     # Check significance level.
     if not isinstance(alpha, (float)):
@@ -463,8 +462,8 @@ def calc_twosample_tvalue(m1, sd1, n1, m2, sd2, n2, d):
         t_val (float): Calculated t-value.
 
     """
-    sp = math.sqrt(((n1-1)*sd1**2+(n2-1)*sd2**2) / (n1+n2-2))
-    t_val = ((m1-m2)-d) / (sp*math.sqrt(1/n1+1/n2))
+    sp = np.sqrt(((n1-1)*sd1**2+(n2-1)*sd2**2) / (n1+n2-2))
+    t_val = ((m1-m2)-d) / (sp*np.sqrt(1/n1+1/n2))
     return round(t_val, NDIGITS)
 
 
@@ -506,8 +505,8 @@ def t_test(sample_1, sample_2, alpha=DEFAULT_a, d=DEFAULT_d, skip=DEFAULT_s):
         # provided by Monte Carlo codes such as MCNP as uncertainty of
         # calculations) to sample standard deviation (type of data required by
         # t-value calculation).
-        sd1 = sem1 * math.sqrt(n1)
-        sd2 = sem2 * math.sqrt(n2)
+        sd1 = sem1 * np.sqrt(n1)
+        sd2 = sem2 * np.sqrt(n2)
 
         t_val = calc_twosample_tvalue(m1, sd1, n1, m2, sd2, n2, d)
         df = n1 + n2 - 2  # Degree of freedom.
