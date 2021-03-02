@@ -22,48 +22,15 @@ Usage:
 
 """
 
-# Standard libraries.
+# Standard library imports.
 import argparse
 
-# Local modules.
+# Local module imports.
 from t_test.twosample_ttest import *
 
 
-# Main.
-if __name__ == """__main__""":
-    parser = argparse.ArgumentParser(description="Run two-sample t-test.")
-
-    parser.add_argument("filenames", type=str, nargs=2,
-                        help="Input data filenames. Must be two strings.")
-
-    parser.add_argument("--alpha", "-a", type=float, default=DEFAULT_a,
-                        help="Target significance level. "\
-                        + "Default: {0}".format(DEFAULT_a))
-
-    parser.add_argument("--discrepancy", "-d", type=float, default=DEFAULT_d,
-                        help="Set discrepancy between two data set. "\
-                        + "Default: {0}".format(DEFAULT_d))
-
-    parser.add_argument("--skip", "-s", action='store_true',
-                        help="Skip mismatching data points instead of raising" \
-                        + " errors.")
-
-    parser.add_argument("--verbose", "-v", type=int, default=1,
-                        help="Verbosity level of t-test result. " \
-                        + "0: No summary displayed. " \
-                        + "1: Display simple summary with rejection counts. " \
-                        + "2: Display all rejected cases and relative standard " \
-                        + "errors. Default: {0}".format(DEFAULT_v))
-
-    parser.add_argument("--plot", "-p", type=str, nargs=2,
-                        metavar=("plot_type", "plot_filename"),
-                        help="Plot two-sample t-test results. " \
-                        + "Plot type choices: {0}, ".format(CHOICES_plot_type) \
-                        + "Default filename: {0}".format(DEFAULT_plot_name))
-
-    args = parser.parse_args()
-
-
+def run_ttest(args):
+    """Wrapper for running two-sample t-test."""
     [file_1, file_2] = args.filenames
 
     data_1 = load_data(file_1)
@@ -86,3 +53,48 @@ if __name__ == """__main__""":
             plot_p_2d(x, y, v, tt, xl, yl, args.alpha, plot_filename)
         print("- Two-sample t-test results are plotted as {0} in {1}.".format(
             plot_type, plot_filename))
+
+
+def parse_cla():
+    """Parse command-line arguments."""
+    parser = argparse.ArgumentParser(description="Run two-sample t-test.")
+
+    parser.add_argument("filenames", type=str, nargs=2,
+                        help="Input data filenames. Must be two strings.")
+
+    parser.add_argument("--alpha", "-a", type=float, default=DEFAULT_a,
+                        help=("Target significance level. "
+                              " Default: {0}").format(DEFAULT_a))
+
+    parser.add_argument("--discrepancy", "-d", type=float, default=DEFAULT_d,
+                        help=("Set discrepancy between two data set."
+                              " Default: {0}").format(DEFAULT_d))
+
+    parser.add_argument("--skip", "-s", action='store_true',
+                        help=("Skip mismatching data points instead of raising"
+                              " errors."))
+
+    parser.add_argument("--verbose", "-v", type=int, default=1,
+                        help=("Verbosity level of t-test result."
+                              " 0: No summary displayed."
+                              " 1: Display simple summary with rejection"
+                              " counts."
+                              " 2: Display all rejected cases and relative"
+                              " standard errors."
+                              " Default: {0}").format(DEFAULT_v))
+
+    parser.add_argument("--plot", "-p", type=str, nargs=2,
+                        metavar=("plot_type", "plot_filename"),
+                        help=("Plot two-sample t-test results."
+                              " Plot type choices: {0},"
+                              " Default filename: {1}").format(
+                                  CHOICES_plot_type, DEFAULT_plot_name))
+
+    args = parser.parse_args()
+    return args
+
+
+# Main.
+if __name__ == """__main__""":
+    args = parse_cla()
+    run_ttest(args)
