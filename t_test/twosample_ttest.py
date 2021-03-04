@@ -515,10 +515,7 @@ def t_test(sample_1, sample_2, alpha=DEFAULT_a, d=DEFAULT_d, skip=DEFAULT_s):
 
         # Critical t-value, two-tailed.
         t_crit = round(stats.t.ppf(1.0 - alpha/2.0, df), NDIGITS)
-        if abs(t_val) <= t_crit:
-            reject = False
-        else:
-            reject = True
+        reject = abs(t_val) > t_crit
 
         stat[key] = (t_val, df, p_val, t_crit, reject, [rse1, rse2])
 
