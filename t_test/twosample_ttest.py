@@ -38,19 +38,14 @@ from t_test import twosample_ttest as tt
 stat = tt.t_test(sample_1, sample_2, alpha, d, skip)
 
 Following functions are included in this module:
-* Customizable data loading/processing and plotting functions
-  - load_data
-  - process_data
-  - process_2dplot_input
-  - calc_rse
-  - print_rej_summary
-  - plot_p_hist
-  - plot_p_2d
-* Main t-test running functions
-  - check_input_args
-  - check_data_matching
-  - calc_twosample_tvalue
-  - t_test
+- calc_rse
+- print_rej_summary
+- plot_p_hist
+- plot_p_2d
+- check_input_args
+- check_data_matching
+- calc_twosample_tvalue
+- t_test (top-level)
 
 """
 
@@ -65,8 +60,6 @@ DEFAULT_d = 0  # Default discrepancy between two means.
 DEFAULT_n = 30  # Default sample size, if not specified.
 DEFAULT_v = 1  # Default verbosity level.
 DEFAULT_s = False  # Default boolean to skip mismatching keywords.
-DEFAULT_plot_name = "plot_twosample-ttest.png"  # Default plot filename.
-CHOICES_plot_type = ('histogram', 'heatmap')  # Plot style choices.
 
 NDIGITS = 5  # Default precision after the decimal point.
 
@@ -75,98 +68,6 @@ DEFAULT_fontsize_title = 12
 DEFAULT_fontsize = 10
 DEFAULT_markersize = 36
 DEFAULT_cticknum = 6
-
-
-# ---- Customizable data loading/processing and plotting functions ---- #
-
-def load_data(filename):
-    """Load data from a file.
-
-    This function loads data from given file as is.
-
-    Arguments:
-        filename (str): Input filename.
-
-    Returns:
-        data (dict): Dictionary of parsed data.
-
-    """
-    print("- Loading data from '{0}'.".format(filename))
-
-    with open(filename, 'r') as f:
-        lines = f.readlines()
-
-    data = {}
-    # Create a dictionary (`key`, `val`) where:
-    # - key: Reference keyword for two-sample t-value calculation
-    # - val: List of parsed data.
-    # Example:
-    # for line in lines[1:]:  # It is assumed the file read has a header line.
-    #     token = line.split()
-    #     data[token[0]] = [float(token[1]), float(token[2])]
-
-    return data
-
-
-def process_data(rdata, default_n=DEFAULT_n):
-    """Process data for t-value calculation.
-
-    This function performs pre-processing of given raw data
-    to calculate mean, standard error and sample size that are required for
-    t-value calculation.
-
-    Arguments:
-        rdata (dict): Dictionary of raw data.
-        default_n (int): Default sample size if not specified.
-            Default = 30
-
-    Returns:
-        pdata (dict): Dictionary of processed data in the form of
-            [mean, standard error, sample size].
-
-    """
-    print("- Processing loaded data.")
-
-    pdata = {}
-    # Note that a t-value will be calculated for each pair of dictionary.
-    # Example:
-    # for key, val in rdata.items():
-    #     val.append(default_n)
-    #     pdata[key] = val
-
-    return pdata
-
-
-def process_2dplot_input(stat):
-    """Process data for 2D heatmap plot.
-
-    This function processes t-test result data into proper input for
-    `plot_p_2d` function that plots p-values in 2D heatmap.
-
-    Arguments:
-        stat (dict): Dictionary of {key, [t-vaue, degree of freedom, p-value,
-            critical t-value, rejection boolean, RSEs]} pair.
-
-    Returns:
-        x (list): List of x-coordinates for scatter plot.
-        y (list): List of y-coordinates for scatter plot.
-        v (list): List of p-values to be displayed in color.
-        tt (str): Figure title.
-        xl (str): x-axis label.
-        yl (str): y-axis label.
-
-    """
-    [x, y, v, tt, xl, yl] = [[], [], [], '', '', '']
-    # Note that x, y, and v are 1D lists as inputs for scatter plots.
-    # Size of x, y, and z must be the same.
-    # Example:
-    # x = [key[0] for key in stat]
-    # y = [key[1] for key in stat]
-    # v = [val[2] for val in stat.values()]
-    # tt = "p-value Heatmap"
-    # xl = "X [cm]"
-    # yl = "Y [cm]"
-    return (x, y, v, tt, xl, yl)
 
 
 def print_rej_summary(stat, alpha, d, verbose=DEFAULT_v):
@@ -338,8 +239,6 @@ def plot_p_2d(x, y, v, tt, xl, yl, alpha, plot_fname, reject_only=True,
 
     plt.savefig(plot_fname)
 
-
-# ---- Main t-test running functions ---- #
 
 def check_input_args(sample_1, sample_2, alpha, d, skip):
     """Check if valid input arguments are provided.

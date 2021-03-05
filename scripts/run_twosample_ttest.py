@@ -3,8 +3,18 @@
 
 Author: YoungHui Park
 
-This is a wrapper script that runs 't_test' function from `twosample_ttest`
-module. Refer README.md in `t_test` directory for details.
+This script serves as a template for running two-sample t-tests by calling
+'t_test' function from `twosample_ttest` module.
+Refer README.md in `t_test` directory for details.
+
+Note:
+The following functions are designed as an example for preparing data structured
+for the main 't_test' function in `twosample_ttest` module.
+One may want to change their implementations according to input data structure
+of one's choice.
+- load_data
+- process_data
+- process_2dplot_input
 
 Usage:
 - `filenames`: Input data filenames. Must be two strings.
@@ -21,6 +31,18 @@ Usage:
   reject null hypothesis along with details of all rejected cases, and save a
   histogram of p-values in `fig_h.png`.
 
+Reproducing example:
+Run the following commands in the root directory of `snippets` repo:
+- $ python3 scripts/run_twosample_ttest.py \
+    t_test/example/flux_full-core.imsht t_test/example/flux_50cm-cut-core.imsht \
+    -v 2 -s -p histogram ex-histogram_uwnr-flux-comp.png
+- $ python3 scripts/run_twosample_ttest.py \
+    t_test/example/flux_full-core.imsht t_test/example/flux_50cm-cut-core.imsht \
+    -v 2 -s -p heatmap ex-heatmap_uwnr-flux-comp_rej-focused.png
+(Manually change 'reject_only' input argument in 'plot_p_2d' function to False
+and run the second command in order to reproduce the equivalent of
+'ex-heatmap_uwnr-flux-comp_acc-focused.png')
+
 """
 
 # Standard library imports.
@@ -28,6 +50,98 @@ import argparse
 
 # Local module imports.
 from t_test.twosample_ttest import *
+
+
+DEFAULT_plot_name = "plot_twosample-ttest.png"  # Default plot filename.
+CHOICES_plot_type = ('histogram', 'heatmap')  # Plot style choices.
+
+
+def load_data(filename):
+    """Load data from a file.
+
+    This function loads data from given file as is.
+
+    Arguments:
+        filename (str): Input filename.
+
+    Returns:
+        data (dict): Dictionary of parsed data.
+
+    """
+    print("- Loading data from '{0}'.".format(filename))
+
+    with open(filename, 'r') as f:
+        lines = f.readlines()
+
+    data = {}
+    for line in lines:
+        tokens = line.split()
+        if len(tokens) == 6:
+            try:
+                [e, x, y, z, res, rel] = [float(v) for v in line.split()]
+            except ValueError:
+                e = line.split()[0]
+                [x, y, z, res, rel] = [float(v) for v in line.split()[1:]]
+            if e == 5.000E-07 and z == 22.5:
+                if res != 0.00000E+00 and rel != 0.00000E+00:
+                    data[(x,y,z)] = [res, rel*res]
+    return data
+
+
+def process_data(rdata, default_n=1000):
+    """Process data for t-value calculation.
+
+    This function performs pre-processing of given raw data
+    to calculate mean, standard error and sample size that are required for
+    t-value calculation.
+
+    Arguments:
+        rdata (dict): Dictionary of raw data.
+        default_n (int): Default sample size if not specified.
+            Default = 30
+
+    Returns:
+        pdata (dict): Dictionary of processed data in the form of
+            [mean, standard error, sample size].
+
+    """
+    print("- Processing loaded data.")
+
+    pdata = {}
+    for key, val in rdata.items():
+        val.append(default_n)
+        pdata[key] = val
+
+    return pdata
+
+
+def process_2dplot_input(stat):
+    """Process data for 2D heatmap plot.
+
+    This function processes t-test result data into proper input for
+    `plot_p_2d` function that plots p-values in 2D heatmap.
+
+    Arguments:
+        stat (dict): Dictionary of {key, [t-vaue, degree of freedom, p-value,
+            critical t-value, rejection boolean, RSEs]} pair.
+
+    Returns:
+        x (list): List of x-coordinates for scatter plot.
+        y (list): List of y-coordinates for scatter plot.
+        v (list): List of p-values to be displayed in color.
+        tt (str): Figure title.
+        xl (str): x-axis label.
+        yl (str): y-axis label.
+
+    """
+    [x, y, v, tt, xl, yl] = [[], [], [], '', '', '']
+    x = [key[0] for key in stat]
+    y = [key[1] for key in stat]
+    v = [val[2] for val in stat.values()]
+    tt = "p-value Heatmap"
+    xl = "X [cm]"
+    yl = "Y [cm]"
+    return (x, y, v, tt, xl, yl)
 
 
 def run_ttest(args):
