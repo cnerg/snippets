@@ -23,6 +23,7 @@ Usage:
 - `--skip`(`-s`): Skip mismatching data points instead of raising errors.
 - `--verbose`(`-v`): Verbosity level of t-test result.
 - `--plot`(`-p`): Plot type and filename.
+- `--entire`(`-e`): Trigger heatmap to show both accepted and rejected cases.
 * $ python3 run_twosample_ttest.py file1 file2 -a 0.01 -d 0.04 -s -v 2 \
   -p histogram fig_h.png
   -> Calculate t-statistic with significance level of 0.01 (or 1 %)
@@ -33,15 +34,15 @@ Usage:
 
 Reproducing example:
 Run the following commands in the root directory of `snippets` repo:
-- $ python3 scripts/run_twosample_ttest.py \
-    t_test/example/flux_full-core.imsht t_test/example/flux_50cm-cut-core.imsht \
-    -v 2 -s -p histogram ex-histogram_uwnr-flux-comp.png
-- $ python3 scripts/run_twosample_ttest.py \
-    t_test/example/flux_full-core.imsht t_test/example/flux_50cm-cut-core.imsht \
-    -v 2 -s -p heatmap ex-heatmap_uwnr-flux-comp_rej-focused.png
-(Manually change 'reject_only' input argument in 'plot_p_2d' function to False
-and run the second command in order to reproduce the equivalent of
-'ex-heatmap_uwnr-flux-comp_acc-focused.png')
+$ python3 scripts/run_twosample_ttest.py \
+  t_test/example/flux_full-core.imsht t_test/example/flux_50cm-cut-core.imsht \
+  -v 2 -s -p histogram ex-histogram_uwnr-flux-comp.png
+$ python3 scripts/run_twosample_ttest.py \
+  t_test/example/flux_full-core.imsht t_test/example/flux_50cm-cut-core.imsht \
+  -v 2 -s -p heatmap ex-heatmap_uwnr-flux-comp_rej-focused.png
+$ python3 scripts/run_twosample_ttest.py \
+  t_test/example/flux_full-core.imsht t_test/example/flux_50cm-cut-core.imsht \
+  -v 2 -s -p heatmap ex-heatmap_uwnr-flux-comp_acc-focused.png -e
 
 """
 
@@ -166,7 +167,8 @@ def run_ttest(args):
             tt.plot_p_hist(stat, args.alpha, plot_filename)
         elif plot_type == 'heatmap':
             (x, y, v, tt, xl, yl) = process_2dplot_input(stat)
-            tt.plot_p_2d(x, y, v, tt, xl, yl, args.alpha, plot_filename)
+            tt.plot_p_2d(x, y, v, tt, xl, yl, args.alpha, plot_filename,
+                         reject_only=(not args.entire))
         print("- Two-sample t-test results are plotted as {0} in {1}.".format(
             plot_type, plot_filename))
 
@@ -205,6 +207,11 @@ def parse_cla():
                               " Plot type choices: {0},"
                               " Default filename: {1}").format(
                                   CHOICES_plot_type, DEFAULT_plot_name))
+
+    parse.add_argument("--entire", "-e", action='store_true',
+                       help=("Trigger heatmap to show both accepted and"
+                             " rejected cases instead of replacing accepted"
+                             " cases with 'pass' marker."))
 
     args = parser.parse_args()
     return args
