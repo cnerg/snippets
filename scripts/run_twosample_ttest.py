@@ -8,8 +8,8 @@ This script serves as a template for running two-sample t-tests by calling
 Refer README.md in `t_test` directory for details.
 
 Note:
-The following functions are designed as an example for preparing data structured
-for the main 't_test' function in `twosample_ttest` module.
+The following functions are designed as an example to load/process MCNP mesh
+tally files from `t_test/example` directory.
 One may want to change their implementations according to input data structure
 of one's choice.
 - load_data

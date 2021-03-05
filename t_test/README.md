@@ -76,8 +76,13 @@ stat = tt.t_test(sample_1, sample_2, alpha, d, skip)
 
 ### `run_twosample_ttest.py`
 
-This is a wrapper script, located in `scripts` directory, that runs
-`twosample_ttest.py`.
+This script, located in `scripts` directory, serves as a template for running
+two-sample t-tests by calling 't_test' function from `twosample_ttest` module.
+
+In this script, data loading/processing functions are designed as an example
+to load/process MCNP mesh tally files from `t_test/example` directory.
+One may want to change their implementations according to input data structure
+of one's choice.
 
 Usage:
 - Command line arguments:
@@ -87,6 +92,7 @@ Usage:
   - `--skip`(`-s`): Skip mismatching data points instead of raising errors.
   - `--verbose`(`-v`): Verbosity level of t-test result.
   - `--plot`(`-p`): Plot type and filename.
+  - `--entire`(`-e`): Trigger heatmap to show both accepted and rejected cases.
 - Example:
 ```shell
 $ python3 run_twosample_ttest.py file1 file2 -a 0.01 -d 0.04 -s -v 2
