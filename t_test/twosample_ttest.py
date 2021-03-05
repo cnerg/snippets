@@ -154,7 +154,7 @@ def plot_p_hist(stat, alpha, plot_fname, fig_scale=1.0):
     plt.savefig(plot_fname)
 
 
-def plot_p_2d(x, y, v, tt, xl, yl, alpha, plot_fname, reject_only=True,
+def plot_p_2d(x, y, v, tl, xl, yl, alpha, plot_fname, reject_only=True,
               fig_scale=1.6):
     """Plot calculated p-values in 2D heatmap.
 
@@ -164,7 +164,7 @@ def plot_p_2d(x, y, v, tt, xl, yl, alpha, plot_fname, reject_only=True,
         x (list): List of x-coordinates for scatter plot.
         y (list): List of y-coordinates for scatter plot.
         v (list): List of p-values to be displayed in color.
-        tt (str): Figure title.
+        tl (str): Figure title.
         xl (str): x-axis label.
         yl (str): y-axis label.
         alpha (float): Significance level.
@@ -233,7 +233,7 @@ def plot_p_2d(x, y, v, tt, xl, yl, alpha, plot_fname, reject_only=True,
     ax.tick_params(axis='y', labelsize=DEFAULT_fontsize*fig_scale)
 
     # Label settings.
-    ax.set_title(tt, fontsize=DEFAULT_fontsize_title*fig_scale)
+    ax.set_title(tl, fontsize=DEFAULT_fontsize_title*fig_scale)
     ax.set_xlabel(xl, fontsize=DEFAULT_fontsize*fig_scale)
     ax.set_ylabel(yl, fontsize=DEFAULT_fontsize*fig_scale)
 

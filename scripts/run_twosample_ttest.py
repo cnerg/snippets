@@ -130,19 +130,19 @@ def process_2dplot_input(stat):
         x (list): List of x-coordinates for scatter plot.
         y (list): List of y-coordinates for scatter plot.
         v (list): List of p-values to be displayed in color.
-        tt (str): Figure title.
+        tl (str): Figure title.
         xl (str): x-axis label.
         yl (str): y-axis label.
 
     """
-    [x, y, v, tt, xl, yl] = [[], [], [], '', '', '']
+    [x, y, v, tl, xl, yl] = [[], [], [], '', '', '']
     x = [key[0] for key in stat]
     y = [key[1] for key in stat]
     v = [val[2] for val in stat.values()]
-    tt = "p-value Heatmap"
+    tl = "p-value Heatmap"
     xl = "X [cm]"
     yl = "Y [cm]"
-    return (x, y, v, tt, xl, yl)
+    return (x, y, v, tl, xl, yl)
 
 
 def run_ttest(args):
@@ -166,8 +166,8 @@ def run_ttest(args):
         if plot_type == 'histogram':
             tt.plot_p_hist(stat, args.alpha, plot_filename)
         elif plot_type == 'heatmap':
-            (x, y, v, tt, xl, yl) = process_2dplot_input(stat)
-            tt.plot_p_2d(x, y, v, tt, xl, yl, args.alpha, plot_filename,
+            (x, y, v, tl, xl, yl) = process_2dplot_input(stat)
+            tt.plot_p_2d(x, y, v, tl, xl, yl, args.alpha, plot_filename,
                          reject_only=(not args.entire))
         print("- Two-sample t-test results are plotted as {0} in {1}.".format(
             plot_type, plot_filename))
@@ -182,7 +182,7 @@ def parse_cla():
 
     parser.add_argument("--alpha", "-a", type=float, default=tt.DEFAULT_a,
                         help=("Target significance level. "
-                              " Default: {0}").format(DEFAULT_a))
+                              " Default: {0}").format(tt.DEFAULT_a))
 
     parser.add_argument("--discrepancy", "-d", type=float, default=tt.DEFAULT_d,
                         help=("Set discrepancy between two data set."
@@ -208,10 +208,10 @@ def parse_cla():
                               " Default filename: {1}").format(
                                   CHOICES_plot_type, DEFAULT_plot_name))
 
-    parse.add_argument("--entire", "-e", action='store_true',
-                       help=("Trigger heatmap to show both accepted and"
-                             " rejected cases instead of replacing accepted"
-                             " cases with 'pass' marker."))
+    parser.add_argument("--entire", "-e", action='store_true',
+                        help=("Trigger heatmap to show both accepted and"
+                              " rejected cases instead of replacing accepted"
+                              " cases with 'pass' marker."))
 
     args = parser.parse_args()
     return args
