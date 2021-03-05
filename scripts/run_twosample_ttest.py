@@ -49,7 +49,7 @@ and run the second command in order to reproduce the equivalent of
 import argparse
 
 # Local module imports.
-from t_test.twosample_ttest import *
+from t_test import twosample_ttest as tt
 
 
 DEFAULT_plot_name = "plot_twosample-ttest.png"  # Default plot filename.
@@ -154,18 +154,19 @@ def run_ttest(args):
     data_2 = load_data(file_2)
     sample_2 = process_data(data_2)
 
-    stat = t_test(sample_1, sample_2, args.alpha, args.discrepancy, args.skip)
+    stat = tt.t_test(sample_1, sample_2, args.alpha, args.discrepancy,
+                     args.skip)
 
     if args.verbose:
-        print_rej_summary(stat, args.alpha, args.discrepancy, args.verbose)
+        tt.print_rej_summary(stat, args.alpha, args.discrepancy, args.verbose)
 
     if args.plot:
         (plot_type, plot_filename) = args.plot
         if plot_type == 'histogram':
-            plot_p_hist(stat, args.alpha, plot_filename)
+            tt.plot_p_hist(stat, args.alpha, plot_filename)
         elif plot_type == 'heatmap':
             (x, y, v, tt, xl, yl) = process_2dplot_input(stat)
-            plot_p_2d(x, y, v, tt, xl, yl, args.alpha, plot_filename)
+            tt.plot_p_2d(x, y, v, tt, xl, yl, args.alpha, plot_filename)
         print("- Two-sample t-test results are plotted as {0} in {1}.".format(
             plot_type, plot_filename))
 
@@ -177,26 +178,26 @@ def parse_cla():
     parser.add_argument("filenames", type=str, nargs=2,
                         help="Input data filenames. Must be two strings.")
 
-    parser.add_argument("--alpha", "-a", type=float, default=DEFAULT_a,
+    parser.add_argument("--alpha", "-a", type=float, default=tt.DEFAULT_a,
                         help=("Target significance level. "
                               " Default: {0}").format(DEFAULT_a))
 
-    parser.add_argument("--discrepancy", "-d", type=float, default=DEFAULT_d,
+    parser.add_argument("--discrepancy", "-d", type=float, default=tt.DEFAULT_d,
                         help=("Set discrepancy between two data set."
-                              " Default: {0}").format(DEFAULT_d))
+                              " Default: {0}").format(tt.DEFAULT_d))
 
     parser.add_argument("--skip", "-s", action='store_true',
                         help=("Skip mismatching data points instead of raising"
                               " errors."))
 
-    parser.add_argument("--verbose", "-v", type=int, default=1,
+    parser.add_argument("--verbose", "-v", type=int, default=tt.DEFAULT_v,
                         help=("Verbosity level of t-test result."
                               " 0: No summary displayed."
                               " 1: Display simple summary with rejection"
                               " counts."
                               " 2: Display all rejected cases and relative"
                               " standard errors."
-                              " Default: {0}").format(DEFAULT_v))
+                              " Default: {0}").format(tt.DEFAULT_v))
 
     parser.add_argument("--plot", "-p", type=str, nargs=2,
                         metavar=("plot_type", "plot_filename"),
