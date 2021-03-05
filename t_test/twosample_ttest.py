@@ -86,7 +86,7 @@ def print_rej_summary(stat, alpha, d, verbose=DEFAULT_v):
             0: No summary displayed.
             1: Display simple summary with rejection counts.
             2: Display all rejected cases and relative standard errors.
-            Default = 1
+            * Default: 1
 
     Returns:
         None.
@@ -121,7 +121,7 @@ def plot_p_hist(stat, alpha, plot_fname, fig_scale=DEFAULT_figscale):
         alpha (float): Significance level.
         plot_fname (str): Filename for the output histogram.
         fig_scale (float): Scale of output figure relative to default setting.
-            Default = 1.0
+            * Default: 1.0
 
     Returns:
         None.
@@ -177,9 +177,9 @@ def plot_p_2d(x, y, v, tl, xl, yl, alpha, plot_fname,
             over the entire range with center color set to be the alpha value
             (Note that this can lead to significantly different color scales
             between rejected cases and accepted cases.).
-            Default = True
+            * Default: True
         fig_scale (float): Scale of output figure relative to default setting.
-            Default = 1.0
+            * Default: 1.0
 
     Returns:
         None.
@@ -380,11 +380,11 @@ def t_test(sample_1, sample_2, alpha=DEFAULT_a, d=DEFAULT_d, skip=DEFAULT_s):
         sample_2 (dict): Dictionary of {key: [Sample mean, Estimated standard
             error of the mean, sample size]} pair.
         alpha (float): Significance level.
-            Default = 0.05
+            * Default: 0.05
         d (float): Set discrepancy between two input data, if any.
-            Default = 0
+            * Default: 0
         skip (bool): Boolean to skip mismatching keywords.
-            Default = False
+            * Default: False
 
     Returns:
         stat (dict): Dictionary of {key, [t-vaue, degree of freedom, p-value,
