@@ -60,6 +60,7 @@ DEFAULT_d = 0  # Default discrepancy between two means.
 DEFAULT_n = 30  # Default sample size, if not specified.
 DEFAULT_v = 1  # Default verbosity level.
 DEFAULT_s = False  # Default boolean to skip mismatching keywords.
+DEFAULT_ro = True  # Default boolean for heatmap to plot only rejected cases.
 
 NDIGITS = 5  # Default precision after the decimal point.
 
@@ -68,6 +69,7 @@ DEFAULT_fontsize_title = 12
 DEFAULT_fontsize = 10
 DEFAULT_markersize = 36
 DEFAULT_cticknum = 6
+DEFAULT_figscale = 1.0
 
 
 def print_rej_summary(stat, alpha, d, verbose=DEFAULT_v):
@@ -108,7 +110,7 @@ def print_rej_summary(stat, alpha, d, verbose=DEFAULT_v):
     print(r_str)
 
 
-def plot_p_hist(stat, alpha, plot_fname, fig_scale=1.0):
+def plot_p_hist(stat, alpha, plot_fname, fig_scale=DEFAULT_figscale):
     """Plot histogram of calculated p-values.
 
     This function generates a historgam of p-values for further analysis.
@@ -154,8 +156,8 @@ def plot_p_hist(stat, alpha, plot_fname, fig_scale=1.0):
     plt.savefig(plot_fname)
 
 
-def plot_p_2d(x, y, v, tl, xl, yl, alpha, plot_fname, reject_only=True,
-              fig_scale=1.6):
+def plot_p_2d(x, y, v, tl, xl, yl, alpha, plot_fname,
+              reject_only=DEFAULT_ro, fig_scale=DEFAULT_figscale):
     """Plot calculated p-values in 2D heatmap.
 
     This function generates a 2D heatmap of p-values.
@@ -177,7 +179,7 @@ def plot_p_2d(x, y, v, tl, xl, yl, alpha, plot_fname, reject_only=True,
             between rejected cases and accepted cases.).
             Default = True
         fig_scale (float): Scale of output figure relative to default setting.
-            Default = 1.6
+            Default = 1.0
 
     Returns:
         None.
