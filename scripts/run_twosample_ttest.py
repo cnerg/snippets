@@ -12,7 +12,7 @@ The following functions are designed as an example to load/process MCNP mesh
 tally files from `t_test/example` directory.
 One may want to change their implementations according to input data structure
 of one's choice.
-- load_data
+- load_mcnp_mesh_slice
 - process_data
 - process_2dplot_input
 
@@ -57,10 +57,10 @@ DEFAULT_plot_name = "plot_twosample-ttest.png"  # Default plot filename.
 CHOICES_plot_type = ('histogram', 'heatmap')  # Plot style choices.
 
 
-def load_data(filename):
-    """Load data from a file.
+def load_mcnp_mesh_slice(filename):
+    """Load data from an MCNP mesh tally file.
 
-    This function loads data from given file as is.
+    This function loads data from given MCNP mesh tally file as is.
 
     Arguments:
         filename (str): Input filename.
@@ -149,10 +149,10 @@ def run_ttest(args):
     """Wrapper for running two-sample t-test."""
     [file_1, file_2] = args.filenames
 
-    data_1 = load_data(file_1)
+    data_1 = load_mcnp_mesh_slice(file_1)
     sample_1 = process_data(data_1)
 
-    data_2 = load_data(file_2)
+    data_2 = load_mcnp_mesh_slice(file_2)
     sample_2 = process_data(data_2)
 
     stat = tt.t_test(sample_1, sample_2, args.alpha, args.discrepancy,
