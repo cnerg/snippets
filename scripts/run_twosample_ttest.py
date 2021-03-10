@@ -49,15 +49,19 @@ $ python3 scripts/run_twosample_ttest.py \
 # Standard library imports.
 import argparse
 
+# Third party imports.
+import numpy as np
+
 # Local module imports.
 from t_test import twosample_ttest as tt
 
 
 DEFAULT_plot_name = "plot_twosample-ttest.png"  # Default plot filename.
 CHOICES_plot_type = ('histogram', 'heatmap')  # Plot style choices.
+SLICE_EXAMPLE = [None, None, 22.5, 5.000E-07]  # [x, y, z, e] slice for example.
 
 
-def load_mcnp_mesh_slice(filename):
+def load_mcnp_mesh_slice(filename, slices=SLICE_EXAMPLE):
     """Load data from an MCNP mesh tally file.
 
     This function loads data from given MCNP mesh tally file as is.
@@ -75,6 +79,7 @@ def load_mcnp_mesh_slice(filename):
         lines = f.readlines()
 
     data = {}
+    trigger_save = (np.array(slices) != None)
     for line in lines:
         tokens = line.split()
         if len(tokens) == 6:
@@ -83,9 +88,16 @@ def load_mcnp_mesh_slice(filename):
             except ValueError:
                 e = line.split()[0]
                 [x, y, z, res, rel] = [float(v) for v in line.split()[1:]]
-            if e == 5.000E-07 and z == 22.5:
-                if res != 0.00000E+00 and rel != 0.00000E+00:
-                    data[(x,y,z)] = [res, rel*res]
+
+            if res == 0.00000E+00 and rel == 0.00000E+00:
+                continue
+
+            key = np.array([x, y, z, e])
+            check_save = (key == slices)
+
+            if (check_save == trigger_save).all():
+                data[tuple(key[~trigger_save])] = [res, rel*res]
+
     return data
 
 
