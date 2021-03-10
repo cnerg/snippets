@@ -58,7 +58,7 @@ from t_test import twosample_ttest as tt
 
 DEFAULT_plot_name = "plot_twosample-ttest.png"  # Default plot filename.
 CHOICES_plot_type = ('histogram', 'heatmap')  # Plot style choices.
-SLICE_EXAMPLE = [None, None, 22.5, 5.000E-07]  # [x, y, z, e] slice for example.
+SLICE_EXAMPLE = [None, None, 22.5, 5.000E-07]  # [x, y, z, E] slice for example.
 
 
 def load_mcnp_mesh_slice(filename, slices=SLICE_EXAMPLE):
@@ -68,6 +68,8 @@ def load_mcnp_mesh_slice(filename, slices=SLICE_EXAMPLE):
 
     Arguments:
         filename (str): Input filename.
+        slices (list): List of slicing parameters.
+            * Default: [None, None, 22.5, 5.000E-07] (x, y, z, E)
 
     Returns:
         data (dict): Dictionary of parsed data.
@@ -79,22 +81,28 @@ def load_mcnp_mesh_slice(filename, slices=SLICE_EXAMPLE):
         lines = f.readlines()
 
     data = {}
-    trigger_save = (np.array(slices) != None)
+    trigger_save = (np.array(slices) != None)  # Convert slices to boolean.
     for line in lines:
         tokens = line.split()
+        # Mesh tally file is assumed to be formatted as the following:
+        # - Energy / X / Y / Z / Result / Rel Error
         if len(tokens) == 6:
             try:
                 [e, x, y, z, res, rel] = [float(v) for v in line.split()]
-            except ValueError:
+            except ValueError:  # Cases where Energy = 'Total'.
                 e = line.split()[0]
                 [x, y, z, res, rel] = [float(v) for v in line.split()[1:]]
 
+            # Skip where there's no tally data scored.
             if res == 0.00000E+00 and rel == 0.00000E+00:
                 continue
 
             key = np.array([x, y, z, e])
+            # Check if data from current line matches with slicing parameters.
             check_save = (key == slices)
 
+            # If all matching, make a key excluding slicing parameters
+            # and save results and errors.
             if (check_save == trigger_save).all():
                 data[tuple(key[~trigger_save])] = [res, rel*res]
 
